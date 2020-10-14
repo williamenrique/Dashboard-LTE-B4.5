@@ -21,7 +21,7 @@ class UsuariosModel extends Mysql {
 	/*********************
 	 * funcion de insertar usuario en la DB
 	 *********************/
-	public function insertUser(int $intIdentificacion, string $strTxtNombre,string $strtxtApellidos,int $intTxtTlf, string	$strTxtEmail, int $intListStatus,int $intlistRolId,string $strTxtPass){
+	public function insertUser(int $intIdentificacion, string $strTxtNombre,string $strtxtApellidos,int $intTxtTlf, string	$strTxtEmail, int 	$intListStatus,int $intlistRolId,string $strTxtPass){
 		$this->intId =  $intIdentificacion;
 		$this->strTxtNombre =  $strTxtNombre;
 		$this->strtxtApellidos =  $strtxtApellidos;
@@ -61,7 +61,7 @@ class UsuariosModel extends Mysql {
 	 *********************/
 	public function selectUsers(){
 		@session_start();
-	$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email, p.user_status,r.rol_name FROM table_user p INNER JOIN table_roles r ON p.user_rol = r.rol_id WHERE p.user_status != 0 AND user_id != {$_SESSION['userData']['user_id']}";
+		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email, p.user_status,r.rol_name FROM table_user p INNER JOIN table_roles r ON p.user_rol = r.rol_id WHERE p.user_status != 0 AND user_id != {$_SESSION['userData']['user_id']}";
 		$request = $this->select_all($sql);
 		return $request;
 	}
@@ -117,8 +117,7 @@ class UsuariosModel extends Mysql {
 					$this->strtxtApellidos,
 					$this->intTxtTlf
 				);
-			}
-			if($this->intOption == 2){
+			}else	if($this->intOption == 2){
 				//comprovar que el usuario no exista
 				$sqlNick = "SELECT user_nick FROM table_user WHERE user_nick = '{$this->strTxtNick}'";
 				$requestNick = $this->select_all($sqlNick);
@@ -128,13 +127,11 @@ class UsuariosModel extends Mysql {
 				}else{
 					$request = "exist";
 				}
-			}
-			if($this->intOption == 3){
+			}else	if($this->intOption == 3){
 				$sql = "UPDATE table_user SET  user_pass = ? WHERE user_id = $this->intIdUser AND user_ci = $this->intIdentificacion";
 				$arrData = array($this->strTxtPass);
 			}
 			$request = $this->update($sql,$arrData);
-
 		return $request;
 	}
 	/*************

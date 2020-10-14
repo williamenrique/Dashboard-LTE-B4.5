@@ -170,7 +170,7 @@ class Usuarios extends Controllers{
 	 */
 	public function UpdatePerfil(){
 		if($_POST){
-			//valifdamos si no existe algun valor
+			//validamos si no existe algun valor
 			if($_POST['opcion'] == 1){
 				if(empty($_POST['textNombres']) || empty($_POST['textApellidos'] ) || empty($_POST['textTlf'])) {
 					$arrResponse = array("status" => false, "msg" => "Datos Incorrectos");
@@ -184,7 +184,8 @@ class Usuarios extends Controllers{
 					$strTxtNick = "a";
 					$intOption = 1;
 					$strTxtPass = "a";
-					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick ,$intOption);
+					$filebase = "a";
+					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick ,$intOption,$filebase);
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
 						$arrResponse = array("status" => true, "msg" => "Datos actualizados correctamente"); 
@@ -205,10 +206,12 @@ class Usuarios extends Controllers{
 					$strTxtNick = $_POST['textNick'];
 					$intOption = 2;
 					$strTxtPass = "a";
-					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick, $intOption);
+					$filebase = "a";
+					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick, $intOption,$filebase);
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
-						$arrResponse = array("status" => true, "msg" => "Usuario creado correctamente"); 
+						$arrResponse = array("status" => true, "msg" => "Cambio de usuario correcto"); 
+							$_SESSION['userData']['user_email'] = $_POST['textNick'];
 					}else if($requestUser == "exist"){
 						$arrResponse = array("status" => false, "msg" => "Usuario seleccionado ya esta en uso");
 					}else{
@@ -227,8 +230,9 @@ class Usuarios extends Controllers{
 					$strTxCi = $_POST['textCi'];
 					$strTxtNick = "a";
 					$intOption = 3;
+					$fileBase= "a";
 					$strTxtPass = encryption($_POST['textPassConfirm']) ;
-					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick, $intOption);
+					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick, $intOption,$fileBase);
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
 						$arrResponse = array("status" => true, "msg" => "Cambio de password correctamente"); 

@@ -1,6 +1,6 @@
 <?php
 
-const BASE_URL = "http://localhost/Dashboard-LTE/";
+const BASE_URL = "http://localhost/Dashboard-LTE-B4.5/";
 const HEAD = "src/include/head.php";
 const FOOTER = "src/include/footer.php";
 //const BACK_URL = $_SERVER['REQUEST_URI'];
