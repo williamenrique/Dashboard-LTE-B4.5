@@ -483,8 +483,20 @@ if (document.querySelector('#formDatos')) {
 				let objData = JSON.parse(request.responseText);
 				//leemos el ststus de la respuesta
 				if (objData.status) {
-					Swal.fire('Usuario', objData.msg, 'success');
+					$(function () {
+						var Toast = Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+						})
+						Toast.fire({
+							icon: 'success',
+							title: objData.msg
+						})
+					})
 					location.reload();
+					//Swal.fire('Usuario', objData.msg, 'success');
 				} else {
 					Swal.fire({
 						icon: 'error',
@@ -522,10 +534,19 @@ if (document.querySelector('#formNick')) {
 				let objData = JSON.parse(request.responseText);
 				//leemos el ststus de la respuesta
 				if (objData.status) {
-					// $("#modalUser").modal("hide");
-					// formUser.reset();
-					Swal.fire('Usuario', objData.msg, 'success');
-					// tableUser.ajax.reload();
+					$(function () {
+						var Toast = Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+						})
+						Toast.fire({
+							icon: 'success',
+							title: objData.msg
+						})
+					})
+					location.reload();
 				} else {
 					Swal.fire({
 						icon: 'error',

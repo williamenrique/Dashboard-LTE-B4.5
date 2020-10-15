@@ -119,11 +119,12 @@ class UsuariosModel extends Mysql {
 				);
 			}else	if($this->intOption == 2){
 				//comprovar que el usuario no exista
-				$sqlNick = "SELECT user_nick FROM table_user WHERE user_nick = '{$this->strTxtNick}'";
+			  $sqlNick = "SELECT user_nick FROM table_user WHERE user_nick = '{$this->strTxtNick}'";
 				$requestNick = $this->select_all($sqlNick);
+	
 				if(empty($requestNick)){
-					$sql = "UPDATE table_user SET  user_nick = ?, user_ruta = ? WHERE user_id = $this->intIdUser AND user_ci = $this->intIdentificacion";
-					$arrData = array($this->strTxtNick, $this->fileBase);
+					$sql = "UPDATE table_user SET  user_nick = ? WHERE user_id = $this->intIdUser AND user_ci = $this->intIdentificacion";
+					$arrData = array($this->strTxtNick);
 				}else{
 					$request = "exist";
 				}

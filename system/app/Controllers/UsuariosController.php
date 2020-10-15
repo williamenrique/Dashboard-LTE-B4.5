@@ -244,6 +244,7 @@ class Usuarios extends Controllers{
 					$arrResponse = array("status" => false, "msg" => "Claves no coinciden");
 				}
 			}
+			// sessionUser($_SESSION['idUser']);
 			//convertir los datos en una array JSON para poder leerlos en javascript
 			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 		}
