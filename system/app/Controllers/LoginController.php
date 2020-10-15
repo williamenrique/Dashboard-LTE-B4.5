@@ -36,13 +36,10 @@ class Login extends Controllers{
 					$arrData = $requestUser;
 					if ($arrData['user_status'] == 1) {
 						$_SESSION['idUser'] = $arrData['user_id'];
-						$_SESSION['nombreUser'] = $arrData['user_nombres'];
-						$_SESSION['apellidoUser'] = $arrData['user_apellidos'];
-						$_SESSION['nickUser'] = $arrData['user_nick'];
-						$_SESSION['imgUser'] = $arrData['user_img'];
 						$_SESSION['login'] = true;
 						$arrData = $this->model->sessionLogin($_SESSION['idUser']);
-						$_SESSION['userData'] = $arrData;
+						//creamos la variable de sesion mediante un helper
+						sessionUser($_SESSION['idUser']);
 						$arrResponse = array('status' => true, 'msg' => 'ok');
 					}else{
 						$arrResponse = array('status' => false, 'msg' => 'El usuario inactivo');

@@ -483,10 +483,8 @@ if (document.querySelector('#formDatos')) {
 				let objData = JSON.parse(request.responseText);
 				//leemos el ststus de la respuesta
 				if (objData.status) {
-					// $("#modalUser").modal("hide");
-					// formUser.reset();
 					Swal.fire('Usuario', objData.msg, 'success');
-					// tableUser.ajax.reload();
+					location.reload();
 				} else {
 					Swal.fire({
 						icon: 'error',

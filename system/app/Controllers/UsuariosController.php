@@ -189,6 +189,7 @@ class Usuarios extends Controllers{
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
 						$arrResponse = array("status" => true, "msg" => "Datos actualizados correctamente"); 
+						sessionUser($_SESSION['idUser']);
 					}else{
 						$arrResponse = array("status" => false, "msg" => "No es posible almacenar ls datos");
 					}
@@ -211,7 +212,7 @@ class Usuarios extends Controllers{
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
 						$arrResponse = array("status" => true, "msg" => "Cambio de usuario correcto"); 
-							$_SESSION['userData']['user_email'] = $_POST['textNick'];
+						sessionUser($_SESSION['idUser']);
 					}else if($requestUser == "exist"){
 						$arrResponse = array("status" => false, "msg" => "Usuario seleccionado ya esta en uso");
 					}else{
