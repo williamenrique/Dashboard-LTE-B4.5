@@ -62,24 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 
 			if (strTxtRegisterPassword != '' || strTxtRegisterRepeatPassword != '') {
-				/*
-				if (strTxtRegisterPassword !=  strTxtRegisterRepeatPassword) {
-					$(function () {
-						var Toast = Swal.mixin({
-							toast: true,
-							position: 'top-end',
-							showConfirmButton: false,
-							timer: 3000
-						})
-						Toast.fire({
-							icon: 'info',
-							title: "Password no coinciden"
-						})
-						document.querySelector('#registerRepeatPassword').value = '';
-					})
-					return false;
-				}
-				*/
 				if (strTxtRegisterPassword.length < 1) {
 					$(function () {
 						var Toast = Swal.mixin({
@@ -108,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			request.onreadystatechange = function () {
 				if (request.readyState == 4 && request.status == 200) {
 					//obtenemos los datos y convertimos en JSON
-					//obtenemos los datos y convertimos en JSON
 					let objData = JSON.parse(request.responseText);
 					if (objData.status) {
 						$(function () {
@@ -123,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
 								title: objData.msg
 							})
 						})
+						formRegistre.reset();
 					} else {
 						$(function () {
 							var Toast = Swal.mixin({
