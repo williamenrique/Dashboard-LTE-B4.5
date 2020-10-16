@@ -30,7 +30,7 @@
 					</li>
 					<li class="nav-item" role="presentation">
 						<a class="nav-link" id="tab-register" data-toggle="pill" href="#pills-register" role="tab"
-							aria-controls="pills-register" aria-selected="false">Register</a>
+							aria-controls="pills-register" aria-selected="false">Registro</a>
 					</li>
 				</ul>
 				<!-- Pills navs -->
@@ -85,56 +85,36 @@
 						</form>
 					</div>
 					<div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-						<form>
-							<div class="text-center mb-3">
-								<p>Sign up with:</p>
-								<button type="button" class="btn btn-primary btn-floating mx-1">
-									<i class="fab fa-facebook-f"></i>
-								</button>
-
-								<button type="button" class="btn btn-primary btn-floating mx-1">
-									<i class="fab fa-google"></i>
-								</button>
-
-								<button type="button" class="btn btn-primary btn-floating mx-1">
-									<i class="fab fa-twitter"></i>
-								</button>
-
-								<button type="button" class="btn btn-primary btn-floating mx-1">
-									<i class="fab fa-github"></i>
-								</button>
-							</div>
-
-							<p class="text-center">or:</p>
-
+						<form id="formRegistre">
+							<p class="text-center m-4">Cree una cuenta ingrese los datos</p>
 							<!-- Name input -->
 							<div class="form-outline mb-4">
-								<input type="text" id="registerName" class="form-control" />
-								<label class="form-label" for="registerName">Name</label>
+								<input type="text" id="registerName" name="registerName" class="form-control" />
+								<label class="form-label" for="registerName">Nombre</label>
 							</div>
 
 							<!-- Username input -->
 							<div class="form-outline mb-4">
-								<input type="text" id="registerUsername" class="form-control" />
-								<label class="form-label" for="registerUsername">Username</label>
+								<input type="text" id="registerCi" name="registerCi" class="form-control" />
+								<label class="form-label" for="registerCi">Identificacion</label>
 							</div>
 
 							<!-- Email input -->
 							<div class="form-outline mb-4">
-								<input type="email" id="registerEmail" class="form-control" />
+								<input type="email" id="registerEmail" name="registerEmail" class="form-control" />
 								<label class="form-label" for="registerEmail">Email</label>
 							</div>
 
 							<!-- Password input -->
 							<div class="form-outline mb-4">
-								<input type="password" id="registerPassword" class="form-control" />
+								<input type="password" id="registerPassword" name="registerPassword" class="form-control" />
 								<label class="form-label" for="registerPassword">Password</label>
 							</div>
 
 							<!-- Repeat Password input -->
 							<div class="form-outline mb-4">
-								<input type="password" id="registerRepeatPassword" class="form-control" />
-								<label class="form-label" for="registerRepeatPassword">Repeat password</label>
+								<input type="password" id="registerRepeatPassword" name="registerRepeatPassword" class="form-control" />
+								<label class="form-label" for="registerRepeatPassword">Repita password</label>
 							</div>
 
 							<!-- Checkbox -->
@@ -142,14 +122,11 @@
 								<input class="form-check-input mr-2" type="checkbox" value="" id="registerCheck" checked
 									aria-describedby="registerCheckHelpText" />
 								<label class="form-check-label" for="registerCheck">
-									I have read and agree to the terms
+									He leído y acepto los términos
 								</label>
 							</div>
-
 							<!-- Submit button -->
-							<button type="submit" class="btn btn-primary btn-block mb-3">
-								Sign in
-							</button>
+							<button type="submit" class="btn btn-primary btn-block mb-3 btnCrear">Crear cuenta</button>
 						</form>
 					</div>
 				</div>

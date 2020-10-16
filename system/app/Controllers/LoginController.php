@@ -50,4 +50,45 @@ class Login extends Controllers{
 		}
 		die();
 	}
+
+	/*********
+	 * crear usuario desde el registro nuevo
+	 */
+	public function createUser(){
+		if($_POST){
+			$registerName = ucwords($_POST['registerName']);
+			$registerCi = intval($_POST['registerCi']);
+			$registerEmail = strtolower($_POST['registerEmail']);
+			$registerPassword = $_POST['registerPassword'];
+			$registerRepeatPassword = $_POST['registerRepeatPassword'];
+			if(empty($_POST['registerRepeatPassword'])) {
+				$arrResponse = array("status" => false, "msg" => "Clave no puede estar vacia");
+			}else if($_POST['registerPassword'] == $_POST['registerRepeatPassword']){
+				$strPassEncript = encryption($registerRepeatPassword);
+				$requestUser = $this->model->createUser($registerCi,$registerName,$registerEmail,$strPassEncript);
+				// echo $requestUser;
+				if($requestUser > 0){
+					//comprobar si el nick ya esta en uso
+					$userNIck =  substr($registerName,0,1).'UN'.'-0'.$requestUser;
+					$fileBase = "system/app/Views/Docs/". $userNIck . "/";
+					$fileHash = substr(md5($fileBase . uniqid(microtime() . mt_rand())), 0, 8);
+					// creo carpeta en servidor si no existe
+					if (!file_exists($fileBase))
+					mkdir($fileBase, 0777, true);
+					$sqlUpdate = $this->model->updateNick($requestUser,$registerCi,$registerEmail,$userNIck,$fileBase);
+					$arrResponse = array("status" => true, "msg" => "Cuenta creada");	
+				}else if($requestUser == "exist"){
+					$arrResponse = array("status" => false, "msg" => "Atencion! email o identificacion ya existe ingrese otro");
+				}else{
+					$arrResponse = array("status" => false, "msg" => "No es posible crear la cuenta");
+				}
+			}else{
+				$arrResponse = array("status" => false, "msg" => "Claves no coinciden");
+			}
+			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+		}
+		die();
+	}
+
+	// end class
 }
