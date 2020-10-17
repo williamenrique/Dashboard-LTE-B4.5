@@ -2,7 +2,7 @@
 	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 		<!-- Add icons to the links using the .nav-icon class
 				with font-awesome or any other icon font library -->
-		<li class="nav-item dashboard">
+		<!-- <li class="nav-item dashboard">
 			<a href="<?= base_url()?>dashboard" class="nav-link dashboard-link">
 				<i class="nav-icon fas fa-tachometer-alt"></i>
 				<p>Dashboard</p>
@@ -33,9 +33,9 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> -->
 
-		<?php  cargar_menu($_SESSION['userData']['user_nick'])?>
+		<?php echo cargar_menu($_SESSION['userData']['user_nick'])?>
 
 		<li class="nav-item ">
 			<a href="pages/widgets.html" class="nav-link">
