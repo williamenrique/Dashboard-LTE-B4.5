@@ -23,8 +23,8 @@
 	<!-- overlayScrollbars -->
 	<link rel="stylesheet" href="<?= PLUGINS?>overlayScrollbars/css/OverlayScrollbars.min.css">
 	<!-- Theme style -->
-	<link rel="stylesheet" href="<?= CSS_VENDORS?>adminlte.min.css">
 	<link rel="stylesheet" href="<?= CSS?>style.admin.css">
+	<link rel="stylesheet" href="<?= CSS_VENDORS?>adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -220,13 +220,10 @@
 								</li>
 							</ul>
 						</li>
-						<li class="nav-item ">
-							<a href="pages/widgets.html" class="nav-link">
-								<i class="nav-icon fas fa-th"></i>
-								<p>
-									Widgets
-									<span class="right badge badge-danger">New</span>
-								</p>
+						<li class="nav-item timeLine">
+							<a href="<?= base_url()?>timeLine" class="nav-link timeLine-link">
+								<i class="nav-icon fas fa-clock"></i>
+								<p>Timeline</p>
 							</a>
 						</li>
 

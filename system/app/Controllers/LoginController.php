@@ -40,7 +40,7 @@ class Login extends Controllers{
 						sessionUser($_SESSION['idUser']);
 						$strCodigo = "biCod-".$_SESSION['userData']['user_id']."-".codGenerator();
 						$_SESSION['strCodigo'] = $strCodigo;
-						$this->model->setBitacora($_SESSION['idUser'],$strCodigo,"login");
+						setBitacora($_SESSION['idUser'],$strCodigo);
 						$arrResponse = array('status' => true, 'msg' => 'ok');
 					}else{
 						$arrResponse = array('status' => false, 'msg' => 'El usuario inactivo');

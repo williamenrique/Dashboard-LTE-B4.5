@@ -12,7 +12,7 @@
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="<?= base_url()?>dashboard">Home</a></li>
-						<li class="breadcrumb-item">Usuarios</li>
+						<li class="breadcrumb-item">Timeline</li>
 					</ol>
 				</div><!-- /.col -->
 			</div><!-- /.row -->
@@ -27,18 +27,18 @@
 				<div class="col-12">
 					<!-- Default box -->
 					<div class="card">
-						<div class="card-header">
-							<h3 class="card-title">Title</h3>
-						</div>
 
 						<div class="card-body">
-							Start creating your amazing application!
+							<!-- The time line -->
+							<div class="timeline">
+								<!-- timeline time label -->
+
+								<div>
+									<i class="fas fa-clock bg-gray"></i>
+								</div>
+							</div>
 						</div>
 						<!-- /.card-body -->
-						<div class="card-footer">
-							Footer
-						</div>
-						<!-- /.card-footer-->
 					</div>
 					<!-- /.card -->
 				</div>
@@ -47,3 +47,14 @@
 	</section>
 	<!-- /.content -->
 	<?php footer_admin($data)?>
+
+	<!-- <div class="time-label">
+	<span class="bg-red">10 Feb. 2014</span>
+</div>
+<div>
+	<i class="fas fa-user bg-green"></i>
+	<div class="timeline-item" style="width:30%">
+		<span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
+		<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
+	</div>
+</div> -->
