@@ -75,6 +75,14 @@ function sessionUser(int $idUser){
 	$request = $objLogin->sessionLogin($idUser);
 	return $request;
 }
+
+function updateBitacora(string $strCodigo,string $strHoraFin){
+	require_once ("system/app/Models/LoginModel.php");
+	$objLogin = new LoginModel();
+	$request = $objLogin->updateBitacora($strCodigo,$strHoraFin);
+	dep($request);
+	return $request;
+}
 function strClean($srtCadena){
 	$string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''],$srtCadena);
 	$string = trim($srtCadena);
@@ -104,6 +112,17 @@ function strClean($srtCadena){
 }
 
 function passGenerator($length = 10){
+	$pass = "";
+	$longitud = $length;
+	$cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	$longitudcadena = strlen($cadena);
+	for ($i=1; $i <= $longitud; $i++) { 
+		$pas = rand(0, $longitudcadena -1);
+		$pass .= substr($cadena,$pas,1);
+	}
+	return $pass;
+}
+function codGenerator($length = 4){
 	$pass = "";
 	$longitud = $length;
 	$cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

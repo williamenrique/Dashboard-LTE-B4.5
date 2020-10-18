@@ -21,8 +21,6 @@ class Login extends Controllers{
 		$this->views->getViews($this, "login", $data);
 	}
 	public function loginUser(){
-		// dep($_POST);
-		// die();
 		if($_POST){
 			if(empty($_POST['textUser']) || empty($_POST['textPass'])){
 				$arrResponse = array('status' => false, 'msg' => 'Error en datos');
@@ -40,6 +38,9 @@ class Login extends Controllers{
 						$arrData = $this->model->sessionLogin($_SESSION['idUser']);
 						//creamos la variable de sesion mediante un helper
 						sessionUser($_SESSION['idUser']);
+						$strCodigo = "biCod-".$_SESSION['userData']['user_id']."-".codGenerator();
+						$_SESSION['strCodigo'] = $strCodigo;
+						$this->model->setBitacora($_SESSION['idUser'],$strCodigo,"login");
 						$arrResponse = array('status' => true, 'msg' => 'ok');
 					}else{
 						$arrResponse = array('status' => false, 'msg' => 'El usuario inactivo');

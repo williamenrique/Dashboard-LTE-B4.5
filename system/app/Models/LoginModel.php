@@ -13,6 +13,10 @@ class LoginModel extends Mysql {
 	private $strToken;
 	private $strNick;
 	private $strFileBase;
+	private $strCodigo;
+	private $strHoraInicio;
+	private $strHoraFin;
+	private $strTipo;
 	public function __construct(){
 		parent::__construct();
 	}
@@ -81,6 +85,33 @@ class LoginModel extends Mysql {
 			$request = $this->update($sql,$arrData);
 		}else{
 			$request = 'error';
+		}
+		return $request;
+	}
+	/**************
+	 * funcion para la bitacora
+	 */
+	// public function setBitacora(int $intIdUser, string $strCodigo, string $strHoraInicio, string $strHoraFin, string $strTipo){
+	public function setBitacora(int $intIdUser, string $strCodigo, string $strTipo){
+		$this->intIdUser = $intIdUser;
+		$this->strCodigo = $strCodigo;
+		// $this->strHoraInicio = $strHoraInicio;
+		// $this->strHoraFin = $strHoraFin;
+		$this->strTipo = $strTipo;
+		$sql = "INSERT INTO table_bitacora (b_idUser, b_codigo,b_tipo) VALUES(?,?,?)";
+		$arrData = array($this->intIdUser,$this->strCodigo,$this->strTipo); 
+		$request = $this->insert($sql,$arrData);
+		return $request;
+	}
+	public function updateBitacora(string $strCodigo,string $strHoraFin){
+		$this->strCodigo = $strCodigo;
+		$this->strHoraFin = $strHoraFin;
+		$sql = "SELECT * FROM table_bitacora WHERE b_codigo = '$this->strCodigo'";
+		$request = $this->select($sql);
+		if(!empty($request)){
+			$sql = "UPDATE table_bitacora SET b_horaFinal = ? WHERE b_codigo = '$this->strCodigo'";
+			$arrData = array($this->strHoraFin);
+			$request = $this->update($sql,$arrData);
 		}
 		return $request;
 	}
