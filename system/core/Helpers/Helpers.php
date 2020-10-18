@@ -99,6 +99,8 @@ function strClean($srtCadena){
 	$string = str_ireplace("[","",$string);
 	$string = str_ireplace("]","",$string);
 	$string = str_ireplace("==","",$string);
+
+	return $string;
 }
 
 function passGenerator($length = 10){

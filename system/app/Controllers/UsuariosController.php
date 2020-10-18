@@ -30,10 +30,10 @@ class Usuarios extends Controllers{
 			}else {
 				//almacenamos el id del usuario 
 				$idUser = intval($_POST['idUsuario']);
-				$intIdentificacion = intval($_POST['txtIdentificacion']);
-				$strTxtNombre = ucwords($_POST['txtNombres']);//convierte las primeras letras en mayusculas
-				$strtxtApellidos = ucwords($_POST['txtApellidos']);//convierte las primeras letras en mayusculas
-				$intTxtTlf = intval($_POST['txtTlf']);
+				$intIdentificacion = intval(strClean($_POST['txtIdentificacion']));
+				$strTxtNombre = ucwords(strClean($_POST['txtNombres']));//convierte las primeras letras en mayusculas
+				$strtxtApellidos = ucwords(strClean($_POST['txtApellidos']));//convierte las primeras letras en mayusculas
+				$intTxtTlf = intval(strClean($_POST['txtTlf']));
 				$strTxtEmail = strtolower($_POST['txtEmail']);//convierte todas las letras en minusculas
 				$intListStatus = intval($_POST['listStatus']);
 				$intlistRolId = intval($_POST['listRolId']);
