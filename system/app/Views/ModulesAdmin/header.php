@@ -184,7 +184,7 @@
 				</div>
 
 				<!-- Sidebar Menu -->
-				<?= require_once 'aside.php'?>
+				<?php require_once 'aside.php'?>
 				<!-- /.sidebar-menu -->
 			</div>
 			<div class="sidebar-custom d-flex justify-content-around">
