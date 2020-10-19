@@ -25,22 +25,26 @@ class Timeline extends Controllers{
 
 	public function getTimeline(){
 		$arrData = $this->model->getBitacora();
-		foreach ($arrData as $key) {
-			# code...
-			echo '<div class="time-label">
-										<span class="bg-red">10 Feb. 2014</span>
+		if(count($arrData) > 0){
+			$htmlOptions = "";
+			for ($i=0; $i < count($arrData); $i++) {
+				// $fecha = formatear_fecha($arrData[$i]['inicio']);
+				$htmlOptions .= '<div class="time-label">
+										<span class="bg-red">'.$arrData[$i]['inicio'].'</span>
 									</div>
 									<div>
 										<i class="fas fa-user bg-green"></i>
 										<div class="timeline-item" style="width:30%">
 											<span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
-											<h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
+											<h3 class="timeline-header no-border"><a href="#">'.$arrData[$i]['nombres'].'</a> accepted your friend request</h3>
 										</div>
 									</div>';
+			}
+			$htmlOptions .= '	<div>
+									<i class="fas fa-clock bg-gray"></i>
+								</div>';
 		}
-	
-
-		echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+		echo $htmlOptions;
 		die();
 	}
 }

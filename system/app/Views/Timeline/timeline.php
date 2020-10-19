@@ -33,9 +33,7 @@
 							<div class="timeline">
 								<!-- timeline time label -->
 
-								<div>
-									<i class="fas fa-clock bg-gray"></i>
-								</div>
+							
 							</div>
 						</div>
 						<!-- /.card-body -->
