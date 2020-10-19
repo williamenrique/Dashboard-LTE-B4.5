@@ -76,16 +76,16 @@ function sessionUser(int $idUser){
 	return $request;
 }
 
-function updateBitacora(string $strCodigo,string $strHoraFin){
+function endTimeline(string $strCodigo,string $strHoraFin){
 	require_once ("system/app/Models/TimeLineModel.php");
 	$objTimeLine = new TimeLineModel();
-	$request = $objTimeLine->updateBitacora($strCodigo,$strHoraFin);
+	$request = $objTimeLine->endTimeline($strCodigo,$strHoraFin);
 	return $request;
 }
-function setBitacora(string $strCodigo,string $strHoraFin){
+function setTimeline(int $intIdUser, string $strCodigo, string $strFecha, string $strHoraInicio){
 	require_once ("system/app/Models/TimeLineModel.php");
 	$objTimeLine = new TimeLineModel();
-	$request = $objTimeLine->setBitacora($strCodigo,$strHoraFin);
+	$request = $objTimeLine->setTimeline($intIdUser,$strCodigo,$strFecha,$strHoraInicio);
 	return $request;
 }
 function strClean($srtCadena){

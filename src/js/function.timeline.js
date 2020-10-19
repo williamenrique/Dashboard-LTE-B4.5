@@ -1,4 +1,3 @@
-var tableRol;
 document.addEventListener('DOMContentLoaded', function () {
 	/************************************************* 
 	 * creamos el objeto de envio para tipo de navegador
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	let ajaxUrl = base_url + 'TimeLine/getTimeline';
 	//prepara los datos por ajax preparando el dom
 	request.open('GET', ajaxUrl, true);
-	//envio de datos del formulario que se almacena enla variable
+	//hacemos el envio al servidor
 	request.send();
 	//obtenemos los resultados y evaluamos
 	var timeline = document.querySelector('.timeline');

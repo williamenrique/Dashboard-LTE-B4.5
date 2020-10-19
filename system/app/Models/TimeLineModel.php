@@ -22,26 +22,26 @@ class TimeLineModel extends Mysql {
 	}
 
 	/**************
-	 * funcion para la bitacora
+	 * funcion para la Timeline
 	 */
-	// public function setBitacora(int $intIdUser, string $strCodigo, string $strHoraInicio, string $strHoraFin, string $strTipo){
-	public function setBitacora(int $intIdUser, string $strCodigo){
+	// public function setTimeline(int $intIdUser, string $strCodigo, string $strHoraInicio, string $strHoraFin, string $strTipo){
+	public function setTimeline(int $intIdUser, string $strCodigo, string $strFecha, string $strHoraInicio){
 		$this->intIdUser = $intIdUser;
 		$this->strCodigo = $strCodigo;
-		// $this->strHoraInicio = $strHoraInicio;
-		// $this->strHoraFin = $strHoraFin;
-		$sql = "INSERT INTO table_bitacora (b_idUser, b_codigo) VALUES(?,?)";
-		$arrData = array($this->intIdUser,$this->strCodigo); 
+		$this->strHoraInicio = $strHoraInicio;
+		$this->strFecha = $strFecha;
+		$sql = "INSERT INTO table_timeline(time_idUser,time_codigo,time_fecha,time_inicio)  VALUES(?,?,?,?)";
+		$arrData = array($this->intIdUser,$this->strCodigo, $this->strFecha,$this->strHoraInicio); 
 		$request = $this->insert($sql,$arrData);
 		return $request;
 	}
-	public function updateBitacora(string $strCodigo,string $strHoraFin){
+	public function endTimeline(string $strCodigo,string $strHoraFin){
 		$this->strCodigo = $strCodigo;
 		$this->strHoraFin = $strHoraFin;
-		$sql = "SELECT * FROM table_bitacora WHERE b_codigo = '$this->strCodigo'";
+		$sql = "SELECT * FROM table_timeline WHERE time_codigo = '$this->strCodigo'";
 		$request = $this->select($sql);
 		if(!empty($request)){
-			$sql = "UPDATE table_bitacora SET b_horaFinal = ? WHERE b_codigo = '$this->strCodigo'";
+			$sql = "UPDATE table_timeline SET time_fin = ? WHERE time_codigo = '$this->strCodigo'";
 			$arrData = array($this->strHoraFin);
 			$request = $this->update($sql,$arrData);
 		}
@@ -51,8 +51,13 @@ class TimeLineModel extends Mysql {
 	/******
 	 * funcion timeline
 	 */
-	public function getBitacora(){
-		$sql = "SELECT a.user_nick AS login, a.user_nombres AS nombres, a.user_apellidos AS apellidos, b.rol_name AS rol, c.b_id AS id, c.b_codigo AS codigo, c.b_horaInicio AS inicio, c.b_horaFinal AS fin FROM((table_user a JOIN table_roles b) JOIN table_bitacora c) WHERE ((a.user_rol  = b.rol_id) AND (a.user_id = c.b_idUser) )order by c.b_id desc";
+	// public function getTimeline(){
+	// 	$sql = "SELECT a.user_nick AS login, a.user_nombres AS nombres, a.user_apellidos AS apellidos, b.rol_name AS rol, c.b_id AS id, c.b_codigo AS codigo, c.b_horaInicio AS inicio, c.b_horaFinal AS fin FROM((table_user a JOIN table_roles b) JOIN table_Timeline c) WHERE ((a.user_rol  = b.rol_id) AND (a.user_id = c.b_idUser) )order by c.b_id desc";
+	// 	$request = $this->select_all($sql);
+	// 	return $request;
+	// }
+	public function getTimeline(){
+		$sql = "SELECT login, nombres, apellidos, rol, id, codigo, fecha, inicio, fin FROM v_timeline  ORDER BY id DESC";
 		$request = $this->select_all($sql);
 		return $request;
 	}

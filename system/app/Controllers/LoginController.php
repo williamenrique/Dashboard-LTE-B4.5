@@ -40,7 +40,9 @@ class Login extends Controllers{
 						sessionUser($_SESSION['idUser']);
 						$strCodigo = "biCod-".$_SESSION['userData']['user_id']."-".codGenerator();
 						$_SESSION['strCodigo'] = $strCodigo;
-						setBitacora($_SESSION['idUser'],$strCodigo);
+						$fecha = date('Y-m-d');
+						$strHoraInicio = date('h:i:s');
+						setTimeline($_SESSION['idUser'],$strCodigo,$fecha,$strHoraInicio);
 						$arrResponse = array('status' => true, 'msg' => 'ok');
 					}else{
 						$arrResponse = array('status' => false, 'msg' => 'El usuario inactivo');
