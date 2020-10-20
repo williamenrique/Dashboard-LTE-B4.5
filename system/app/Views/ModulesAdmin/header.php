@@ -8,9 +8,10 @@
 	<title><?= $data['page_title']?></title>
 
 	<!-- Google Font: Source Sans Pro -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- <link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
 	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="">
 	<link rel="stylesheet" href="<?= PLUGINS?>fontawesome-free/css/all.min.css">
 	<!-- dataTable -->
 	<link rel="stylesheet" href="<?= PLUGINS?>dataTableB5/css/bootstrap.min.css">

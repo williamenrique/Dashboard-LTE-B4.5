@@ -16,7 +16,7 @@ class Usuarios extends Controllers{
 		$data['page_functions'] = "function.user.js";
 		$data['page_menu'] = "usuarios";
 		$data['page_link'] = "usuarios";
-		$data['page_menu_open'] = "user-menu";
+		$data['page_menu_open'] = "usuario";
 		$data['page_link_acitvo'] = "link-user";
 		$this->views->getViews($this, "usuarios", $data);
 	}

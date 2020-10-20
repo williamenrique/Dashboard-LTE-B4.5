@@ -14,8 +14,8 @@ class Menu extends Controllers{
 		$data['page_title'] = "Dashboard - Menu Usuario";
 		$data['page_name'] = "menu_usuarios";
 		$data['page_menu'] = "menu";
-		$data['page_link'] = "menu";
-		$data['page_menu_open'] = "user-menu";
+		$data['page_link'] = "menus";
+		$data['page_menu_open'] = "menu";
 		$data['page_link_acitvo'] = "link-menu";
 		$data['page_functions'] = "function.menu.js";
 		$this->views->getViews($this, "menu", $data);
@@ -26,7 +26,7 @@ class Menu extends Controllers{
 		$arrData = $this->model->selectUser();
 		if(count($arrData) > 0){
 			for ($i=0; $i < count($arrData); $i++) { 
-				$htmlOptions .= '<option value="'.$arrData[$i]['user_id'].'">'.$arrData[$i]['user_nombres'].'</option>';
+				$htmlOptions .= '<option value="'.$arrData[$i]['user_id'].'">'.$arrData[$i]['user_nombres'].' ('.$arrData[$i]['rol_name'].')</option>';
 			}
 		}
 		echo $htmlOptions;
@@ -42,6 +42,49 @@ class Menu extends Controllers{
 			}
 		}
 		echo $htmlOptions;
+		die();
+	}
+	public function getSubMenu(){
+		$htmlOptions = "";
+		$arrData = $this->model->selectSubMenu();
+		if(count($arrData) > 0){
+			for ($i=0; $i < count($arrData); $i++) { 
+				$htmlOptions .= '<div class="custom-control custom-checkbox">
+												  <input class="custom-control-input" type="checkbox" id="'.$arrData[$i]['nombre_sub_menu'].'" name="subMenu[]" value="'.$arrData[$i]['id_sub_menu'].'">
+												  <label for="'.$arrData[$i]['nombre_sub_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_sub_menu'].'</label>
+											   </div>';
+				//$htmlOptions .= '<option value="'.$arrData[$i]['id_menu'].'">'.$arrData[$i]['nombre_menu'].'</option>';
+			}
+		}
+		echo $htmlOptions;
+		die();
+	}
+	public function getSubs($intIdMenu){
+		$htmlOptions = "";
+		$arrData = $this->model->getSubMenu($intIdMenu);
+		if(count($arrData) > 0){
+			for ($i=0; $i < count($arrData); $i++) { 
+				$htmlOptions .= '<div class="custom-control custom-checkbox">
+												  <input class="custom-control-input" type="checkbox" id="'.$arrData[$i]['nombre_sub_menu'].'" name="subMenu[]" value="'.$arrData[$i]['id_sub_menu'].'">
+												  <label for="'.$arrData[$i]['nombre_sub_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_sub_menu'].'</label>
+											   </div>';
+				//$htmlOptions .= '<option value="'.$arrData[$i]['id_menu'].'">'.$arrData[$i]['nombre_menu'].'</option>';
+			}
+		}
+		echo $htmlOptions;
+		die();
+	}
+	public function setMenuUser(){
+		// $intIdUser = $_POST['listUser'];
+		$intIdMenu = $_POST['listMenu'];
+		$intIdSubMenu = $_POST['subMenu'];
+		$request = $this->model->insertMenuSub($intIdMenu,$intIdSubMenu);
+		if($request > 0){
+			$arrResponse = array("status" => true, "msg" => "Datos guardados correctamente");
+		}else{
+			$arrResponse = array("status" => false, "msg" => "Error al asignar menu");
+		}
+		echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 		die();
 	}
 }

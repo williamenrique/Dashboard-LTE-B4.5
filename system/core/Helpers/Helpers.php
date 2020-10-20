@@ -171,7 +171,7 @@ function cargar_menu (string $strNick){
 			}
 			echo "<li class='nav-item link-".$options[$index+1]["page_link_activo"]."'>";
 			echo "<a href='".base_url().$options[$index+1]["url"]."' class='nav-link'>";
-			echo "<i class='far fa-circle nav-icon'></i>
+			echo "<i class='far fa-circle nav-icon ml-3'></i>
 						<p>".$options[$index+1]["nombre_sub_menu"]."</p>";
 			echo "
 					</a>
