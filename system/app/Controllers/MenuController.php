@@ -20,4 +20,28 @@ class Menu extends Controllers{
 		$data['page_functions'] = "function.menu.js";
 		$this->views->getViews($this, "menu", $data);
 	}
+
+	public function getUsers(){
+		$htmlOptions = "";
+		$arrData = $this->model->selectUser();
+		if(count($arrData) > 0){
+			for ($i=0; $i < count($arrData); $i++) { 
+				$htmlOptions .= '<option value="'.$arrData[$i]['user_id'].'">'.$arrData[$i]['user_nombres'].'</option>';
+			}
+		}
+		echo $htmlOptions;
+		die();
+	}
+
+	public function getMenu(){
+		$htmlOptions = "";
+		$arrData = $this->model->selectMenu();
+		if(count($arrData) > 0){
+			for ($i=0; $i < count($arrData); $i++) { 
+				$htmlOptions .= '<option value="'.$arrData[$i]['id_menu'].'">'.$arrData[$i]['nombre_menu'].'</option>';
+			}
+		}
+		echo $htmlOptions;
+		die();
+	}
 }

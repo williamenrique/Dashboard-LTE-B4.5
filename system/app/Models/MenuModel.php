@@ -15,4 +15,16 @@ class MenuModel extends Mysql {
 		$request = $this->select_all($sql);
 		return $request;
 	}
+
+	public function selectUser(){
+		$sql = "SELECT * FROM table_user WHERE user_status != 0";
+		$request = $this->select_all($sql);
+		return $request;
+	}
+
+	public function selectMenu(){
+		$sql = "SELECT * FROM table_menu WHERE status != 0";
+		$request = $this->select_all($sql);
+		return $request;
+	}
 }
