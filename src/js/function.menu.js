@@ -1,24 +1,24 @@
 window.addEventListener('load', function () {
-	ftnUsuarios();
+	ftnRol();
 	ftnMenu();
 	ftnMenu1();
 	ftnSubMenu();
 }, false)
 
 /************
- * envio de formulario de menu
+ * envio de formulario de asociar menu con sub menu
  */
 if (document.querySelector(".formMenu")) {
 	var formMenu = document.querySelector('.formMenu');
 		//agregar el evento al boton del formulario
 	formMenu.onsubmit = function (e) {
 		e.preventDefault();
-		var intIdUser = document.querySelector('#listUser').value;
-		var intListMenu = document.querySelector('#listMenu').value;
+		// var intIdUser = document.querySelector('#listUser').value;
+		// var intListMenu = document.querySelector('#listMenu').value;
 		// var intlistRolId = document.querySelector('#subMenu').value;
 
 		let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		let ajaxUrl = base_url + 'Menu/setMenuUser';
+		let ajaxUrl = base_url + 'Menu/setMenuSub';
 		//creamos un objeto del formulario con los datos haciendo referencia a formData
 		let formData = new FormData(formMenu );
 		//prepara los datos por ajax preparando el dom
@@ -46,31 +46,12 @@ if (document.querySelector(".formMenu")) {
 	}
 }
 
-
-/*
-		$(document).on('click', menu, function (event) {
-		var intListMenu = document.querySelector('#listMenu').value;
-		let ajaxUrl = base_url + "Menu/getSubMenus";
-		//creamos el objeto para os navegadores
-		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		//abrimos la conexion y enviamos los parametros para la peticion
-		request.open("GET", ajaxUrl, true);
-		request.send();
-		request.onreadystatechange = function () {
-			if (request.readyState == 4 && request.status == 200) {
-				//option obtenidos del controlador
-				document.querySelector('.listSubmenu').innerHTML = request.responseText;
-			}
-		}
-	})
-*/
-
 /*************************
- * funcion para obtener los roles de usuarios
+ * funcion para obtener los usuarios
  ************************/
-function ftnUsuarios() {
-	if (document.querySelector('#listUser')) {
-		let ajaxUrl = base_url + "Menu/getUsers";
+function ftnRol() {
+	if (document.querySelector('#listrol')) {
+		let ajaxUrl = base_url + "Menu/getRoles";
 		//creamos el objeto para os navegadores
 		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		//abrimos la conexion y enviamos los parametros para la peticion
@@ -79,17 +60,18 @@ function ftnUsuarios() {
 		request.onreadystatechange = function () {
 			if (request.readyState == 4 && request.status == 200) {
 				//option obtenidos del controlador
-				document.querySelector('#listUser').innerHTML = request.responseText;
+				document.querySelector('#listrol').innerHTML = request.responseText;
 				//seleccionando el primer option
-				document.querySelector('#listUser').value = 1;
-				$("#listUser").selectpicker('render');
+				document.querySelector('#listrol').value = 1;
+				$("#listrol").selectpicker('render');
 			}
 		}
 		
 	}
-
 }
-
+/*****************
+ * obtener los menu y cargarlos en el select
+ */
 function ftnMenu() {
 		let ajaxUrl = base_url + "Menu/getMenu";
 		//creamos el objeto para os navegadores
@@ -102,11 +84,14 @@ function ftnMenu() {
 				//option obtenidos del controlador
 				document.querySelector('#listMenu').innerHTML = request.responseText;
 				//seleccionando el primer option
-				document.querySelector('#listMenu').value = 1;
+				// document.querySelector('#listMenu').value = 1;
 				$("#listMenu").selectpicker('render');
 			}
 		}
 }
+/*****************
+ * obtener los menu y cargarlos en el select 2
+ */
 function ftnMenu1() {
 	if (document.querySelector('#listMenuAsignar')) {
 		let ajaxUrl = base_url + "Menu/getMenu";
@@ -120,14 +105,16 @@ function ftnMenu1() {
 				//option obtenidos del controlador
 				document.querySelector('#listMenuAsignar').innerHTML = request.responseText;
 				//seleccionando el primer option
-				document.querySelector('#listMenuAsignar').value = 1;
+				// document.querySelector('#listMenuAsignar').innerHTML = '<option>Seleccione</option>';
 				$("#listMenuAsignar").selectpicker('render');
 			}
 		}
 		
 	}
 }
-
+/*****************
+ * obtener los submenu y cargarlos en el checkbox
+ */
 function ftnSubMenu() {
 	if (document.querySelector('.listSubmenu')) {
 		let ajaxUrl = base_url + "Menu/getSubMenu";
@@ -152,7 +139,6 @@ function ftnSubMenu() {
 var menu = document.querySelector('#listMenuAsignar');
 menu.addEventListener('change',function(){
 	var selectedOption = this.options[menu.selectedIndex];
-	// console.log(selectedOption.value + ': ' + selectedOption.text);
 	let ajaxUrl = base_url + "Menu/getSubs/" + selectedOption.value;
 	//creamos el objeto para os navegadores
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -160,35 +146,35 @@ menu.addEventListener('change',function(){
 	request.open("GET", ajaxUrl, true);
 	request.send();
 	request.onreadystatechange = function () {
-	if (request.readyState == 4 && request.status == 200) {
-		//option obtenidos del controlador
-		document.querySelector('.listSubmenuAsignar').innerHTML = request.responseText;
+		if (request.readyState == 4 && request.status == 200) {
+			//option obtenidos del controlador
+			document.querySelector('.listSubmenuAsignar').innerHTML = request.responseText;
 		}
 	}
-	// console.log(selectedOption.value + ': ' + selectedOption.text);
 });
 
-
+/**
+ * despues de obtener los submenu enviamos el formulario
+ * con el rol y el submenu
+ */
 if (document.querySelector(".formMenuAsignar")) {
 	var formMenuAsignar = document.querySelector('.formMenuAsignar');
 		//agregar el evento al boton del formulario
 	formMenuAsignar.onsubmit = function (e) {
 		e.preventDefault();
-		var menu = document.querySelector('#listMenuAsignar');
-		menu.addEventListener('change', function(){
-			var selectedOption = this.options[menu.selectedIndex];
-			// console.log(selectedOption.value + ': ' + selectedOption.text);
-			let ajaxUrl = base_url + "Menu/getSubs" + selectedOption.value;
-			//creamos el objeto para os navegadores
-			var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			//abrimos la conexion y enviamos los parametros para la peticion
-			request.open("GET", ajaxUrl, true);
-			request.send();
-			request.onreadystatechange = function () {
-				if (request.readyState == 4 && request.status == 200) {
-					//option obtenidos del controlador
-				}
+		//creamos un objeto del formulario con los datos haciendo referencia a formData
+		formData = new FormData(formMenuAsignar);
+		//creamos la ruta de envio
+		let ajaxUrl = base_url + "Menu/setRolSub";
+		//creamos el objeto para os navegadores
+		var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+		//abrimos la conexion y enviamos los parametros para la peticion
+		request.open("POST", ajaxUrl, true);
+		request.send(formData);
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && request.status == 200) {
+				//option obtenidos del controlador
 			}
-		})
+		}
 	}
 }

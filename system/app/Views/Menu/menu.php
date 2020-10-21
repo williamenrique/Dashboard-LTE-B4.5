@@ -74,8 +74,8 @@
 											<form class="formMenuAsignar">
 												<div class="form-row">
 													<div class="col-md-4 mb-3">
-														<label for="listUser">Seleccione Usuario</label>
-														<select id="listUser" data-live-search="true" name="listUser" class="form-control"
+														<label for="listrol">Seleccione Cargo</label>
+														<select id="listrol" data-live-search="true" name="listrol" class="form-control"
 															data-style="btn-outline-primary" data-size="5">
 															<option value="">Seleccione</option>
 														</select>
@@ -84,7 +84,7 @@
 														<label for="listMenuAsignar">Seleccione Menu</label>
 														<select id="listMenuAsignar" data-live-search="true" name="listMenuAsignar"
 															class="form-control" data-style="btn-outline-primary" data-size="5">
-															<option value="">Seleccione</option>
+															<option>Seleccione</option>
 														</select>
 													</div>
 													<div class="col-md-4 mb-3">

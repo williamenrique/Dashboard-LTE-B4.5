@@ -18,8 +18,9 @@ class MenuModel extends Mysql {
 		return $request;
 	}
 
-	public function selectUser(){
-		$sql = "SELECT * FROM table_user a JOIN table_roles b where a.user_rol = b.rol_id AND a.user_status != 0";
+	public function selectRoles(){
+		// $sql = "SELECT * FROM table_user a JOIN table_roles b where a.user_rol = b.rol_id AND a.user_status != 0";
+		$sql = "SELECT * FROM table_roles WHERE rol_status != 0";
 		$request = $this->select_all($sql);
 		return $request;
 	}
@@ -37,8 +38,7 @@ class MenuModel extends Mysql {
 	}
 	public function getSubMenu(int $intIdMenu){
 		$this->intIdMenu = $intIdMenu;
-		$sql = "SELECT a.id_menu,a.nombre_menu,b.id_sub_menu, b.nombre_sub_menu  FROM ((table_menu a JOIN table_menu_sub_menu c) JOIN table_sub_menu b)
-WHERE a.id_menu = $this->intIdMenu";
+		$sql = "SELECT id_sub_menu, nombre_sub_menu FROM v_submenu WHERE id_menu = $this->intIdMenu";
 		// $sql = "SELECT * FROM table_menu_sub_menu WHERE id_menu = $this->intIdMenu";
 		$request = $this->select_all($sql);
 		return $request;
@@ -50,6 +50,17 @@ WHERE a.id_menu = $this->intIdMenu";
 		foreach ($intIdSubMenu as $key) {
 			$sql = "INSERT INTO table_menu_sub_menu(id_menu,id_sub_menu) VALUES (?,?)";
 			$arrData = array($this->intIdMenu,$key);
+			$request = $this->insert($sql,$arrData);
+		}
+		return $request;
+	}
+	public function insertRolSub(int $intlistRolId, array $intIdSubMenu){
+		$this->intlistRolId = $intlistRolId;
+	  $this->intIdSubMenu = $intIdSubMenu;
+		$sql = "";
+		foreach ($intIdSubMenu as $key) {
+			$sql = "INSERT INTO table_roles_sub_menu(id_rol,id_sub_menu) VALUES (?,?)";
+			$arrData = array($this->intlistRolId,$key);
 			$request = $this->insert($sql,$arrData);
 		}
 		return $request;
