@@ -177,7 +177,14 @@ if (document.querySelector(".formMenuAsignar")) {
 		request.send(formData);
 		request.onreadystatechange = function () {
 			if (request.readyState == 4 && request.status == 200) {
-				//option obtenidos del controlador
+				let objData = JSON.parse(request.responseText);
+				//leemos el ststus de la respuesta
+				if (objData.status) {
+					// Swal.fire('Asignacion correcta', objData.msg, 'success');
+					notifi(objData.msg,'success');
+				} else {
+					notifi(objData.msg,'error');
+				}
 			}
 		}
 	}

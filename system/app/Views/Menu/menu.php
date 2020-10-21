@@ -87,11 +87,8 @@
 															<option>Seleccione</option>
 														</select>
 													</div>
-													<div class="col-md-4 mb-3">
-														<label for="listSubmenuAsignar">Seleccione Submenu</label>
-														<div class="form-group listSubmenuAsignar">
+													<div class="col-md-4 mb-3 listSubmenuAsignar">
 
-														</div>
 													</div>
 												</div>
 												<div class="form-row">
