@@ -64,17 +64,19 @@ class Menu extends Controllers{
 	// obtener los submenu extraidos de los menu
 	public function getSubs($intIdMenu){
 		$htmlOptions = "";
-		$arrData = $this->model->getSubMenu($intIdMenu);
-		if(count($arrData) > 0){
-			$htmlOptions .= '	<label for="listSubmenuAsignar">Seleccione Submenu</label>
-														<div class="form-group">';
-			for ($i=0; $i < count($arrData); $i++) { 
-				$htmlOptions .= '<div class="custom-control custom-checkbox">
-												  <input class="custom-control-input" type="checkbox" id="asig_'.$arrData[$i]['nombre_sub_menu'].'" name="subMenu[]" value="'.$arrData[$i]['id_sub_menu'].'">
-												  <label for="asig_'.$arrData[$i]['nombre_sub_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_sub_menu'].'</label>
-											   </div>';
+		if($intIdMenu != 'noselected'){
+			$arrData = $this->model->getSubMenu($intIdMenu);
+			if(count($arrData) > 0){
+				$htmlOptions .= '	<label for="listSubmenuAsignar">Seleccione Submenu</label>
+															<div class="form-group">';
+				for ($i=0; $i < count($arrData); $i++) { 
+					$htmlOptions .= '<div class="custom-control custom-checkbox">
+														<input class="custom-control-input" type="checkbox" id="asig_'.$arrData[$i]['nombre_sub_menu'].'" name="subMenu[]" value="'.$arrData[$i]['id_sub_menu'].'">
+														<label for="asig_'.$arrData[$i]['nombre_sub_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_sub_menu'].'</label>
+													 </div>';
+				}
+				$htmlOptions .= '</div>';
 			}
-			$htmlOptions .= '</div>';
 		}
 		echo $htmlOptions;
 		die();
@@ -129,4 +131,9 @@ class Menu extends Controllers{
 		echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 		die();
 	}
+
+	/***********
+	 * funcion para vista de usuarios menu
+	 */
+	
 }
