@@ -29,7 +29,7 @@
 					<div class="card">
 						<div class="card-header">
 							<h3 class="card-title">
-								<button class="btn btn-success btn-sm"><i class="fas fa-plus mr-2"></i>Menu</button>
+								Tabla de asignacion de menu
 							</h3>
 						</div>
 

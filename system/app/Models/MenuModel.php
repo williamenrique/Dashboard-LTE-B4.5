@@ -39,7 +39,6 @@ class MenuModel extends Mysql {
 	public function getSubMenu(int $intIdMenu){
 		$this->intIdMenu = $intIdMenu;
 		$sql = "SELECT id_sub_menu, nombre_sub_menu FROM v_submenu WHERE id_menu = $this->intIdMenu";
-		// $sql = "SELECT * FROM table_menu_sub_menu WHERE id_menu = $this->intIdMenu";
 		$request = $this->select_all($sql);
 		return $request;
 	}

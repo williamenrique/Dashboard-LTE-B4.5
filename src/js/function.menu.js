@@ -5,6 +5,23 @@ window.addEventListener('load', function () {
 	ftnSubMenu();
 }, false)
 
+/****
+ * funcion para la notificacion
+ */
+function notifi(data, icon) {
+	$(function () {
+		var Toast = Swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		})
+		Toast.fire({
+			icon: icon,
+			title: data
+		})
+	})
+}
 /************
  * envio de formulario de asociar menu con sub menu
  */
@@ -13,10 +30,7 @@ if (document.querySelector(".formMenu")) {
 		//agregar el evento al boton del formulario
 	formMenu.onsubmit = function (e) {
 		e.preventDefault();
-		// var intIdUser = document.querySelector('#listUser').value;
-		// var intListMenu = document.querySelector('#listMenu').value;
-		// var intlistRolId = document.querySelector('#subMenu').value;
-
+		//creamos el objeto de respuesta para diferentes navegadores
 		let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 		let ajaxUrl = base_url + 'Menu/setMenuSub';
 		//creamos un objeto del formulario con los datos haciendo referencia a formData
@@ -32,22 +46,17 @@ if (document.querySelector(".formMenu")) {
 				let objData = JSON.parse(request.responseText);
 				//leemos el ststus de la respuesta
 				if (objData.status) {
-					Swal.fire('Asignacion correcto', objData.msg, 'success');
-					tableUser.ajax.reload();
+					// Swal.fire('Asignacion correcta', objData.msg, 'success');
+					notifi(objData.msg,'success');
 				} else {
-					Swal.fire({
-						icon: 'error',
-						title: 'Oops...',
-						text: objData.msg
-					})
+					notifi(objData.msg,'error');
 				}
 			}
 		}
 	}
 }
-
 /*************************
- * funcion para obtener los usuarios
+ * funcion para obtener los roles
  ************************/
 function ftnRol() {
 	if (document.querySelector('#listrol')) {
@@ -61,8 +70,6 @@ function ftnRol() {
 			if (request.readyState == 4 && request.status == 200) {
 				//option obtenidos del controlador
 				document.querySelector('#listrol').innerHTML = request.responseText;
-				//seleccionando el primer option
-				document.querySelector('#listrol').value = 1;
 				$("#listrol").selectpicker('render');
 			}
 		}
@@ -83,14 +90,13 @@ function ftnMenu() {
 			if (request.readyState == 4 && request.status == 200) {
 				//option obtenidos del controlador
 				document.querySelector('#listMenu').innerHTML = request.responseText;
-				//seleccionando el primer option
-				// document.querySelector('#listMenu').value = 1;
 				$("#listMenu").selectpicker('render');
 			}
 		}
 }
 /*****************
  * obtener los menu y cargarlos en el select 2
+ * se opto por duplicar la funcion para evitar falla
  */
 function ftnMenu1() {
 	if (document.querySelector('#listMenuAsignar')) {
@@ -102,10 +108,8 @@ function ftnMenu1() {
 		request.send();
 		request.onreadystatechange = function () {
 			if (request.readyState == 4 && request.status == 200) {
-				//option obtenidos del controlador
+				//option obtenidos del controlador en formato html
 				document.querySelector('#listMenuAsignar').innerHTML = request.responseText;
-				//seleccionando el primer option
-				// document.querySelector('#listMenuAsignar').innerHTML = '<option>Seleccione</option>';
 				$("#listMenuAsignar").selectpicker('render');
 			}
 		}
@@ -129,12 +133,12 @@ function ftnSubMenu() {
 				document.querySelector('.listSubmenu').innerHTML = request.responseText;
 			}
 		}
-		
 	}
 }
 
 /********
  * llamar al submenu dependiendo el menu
+ * en el select
  */
 var menu = document.querySelector('#listMenuAsignar');
 menu.addEventListener('change',function(){
