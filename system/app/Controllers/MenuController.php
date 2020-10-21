@@ -135,5 +135,16 @@ class Menu extends Controllers{
 	/***********
 	 * funcion para vista de usuarios menu
 	 */
-	
+	public function lista(){
+		$data['page_id'] = 3;
+		$data['page_tag'] = "Menu Lista";
+		$data['page_title'] = "Dashboard - Menu Lista";
+		$data['page_name'] = "menu_usuarios";
+		$data['page_menu'] = "menu";//menu
+		$data['page_link'] = "menus";//menu
+		$data['page_menu_open'] = "menu";//menu
+		$data['page_link_acitvo'] = "link-lista";//para submenu
+		$data['page_functions'] = "function.menu.js";
+		$this->views->getViews($this, "lista", $data);
+	}
 }
