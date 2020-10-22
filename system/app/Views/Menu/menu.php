@@ -51,10 +51,13 @@
 												<div class="form-row">
 													<div class="col-md-3 mb-3">
 														<label for="listMenu">Seleccione Menu</label>
-														<select id="listMenu" data-live-search="true" name="listMenu" class="form-control"
+														<!-- <select id="listMenu" data-live-search="true" name="listMenu" class="form-control"
 															data-style="btn-outline-primary" data-size="5">
 															<option value="">Seleccione</option>
-														</select>
+														</select> -->
+														<div class="form-group listMenu">
+
+														</div>
 													</div>
 													<div class="col-md-4 mb-3">
 														<label for="listRolId">Seleccione Submenu</label>
@@ -75,17 +78,24 @@
 												<div class="form-row">
 													<div class="col-md-4 mb-3">
 														<label for="listrol">Seleccione Cargo</label>
-														<select id="listrol" data-live-search="true" name="listrol" class="form-control"
+														<!-- <select id="listrol" data-live-search="true" name="listrol" class="form-control"
 															data-style="btn-outline-primary" data-size="5">
 															<option value="">Seleccione</option>
-														</select>
+														</select> -->
+														<div class="form-group listRol">
+
+														</div>
 													</div>
 													<div class="col-md-3 mb-3">
 														<label for="listMenuAsignar">Seleccione Menu</label>
-														<select id="listMenuAsignar" data-live-search="true" name="listMenuAsignar"
+														<!-- <select id="listMenuAsignar" data-live-search="true" name="listMenuAsignar"
 															class="form-control" data-style="btn-outline-primary" data-size="5">
 															<option>Seleccione</option>
-														</select>
+														</select> -->
+														<!-- cargar los radios con los menu -->
+														<div class="form-group listMenuAsignar">
+
+														</div>
 													</div>
 													<div class="col-md-4 mb-3 listSubmenuAsignar">
 
