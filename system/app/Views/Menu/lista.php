@@ -28,37 +28,7 @@
 				<div class="col-12">
 					<!-- Default box -->
 					<div class="row listUserMenu">
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
-									<h3 class="card-title text-center">
-										William Enrique <strong class="">(Administrador)</strong>
-									</h3>
-								</div>
-								<!-- /.card-header -->
-								<div class="card-body">
-									<ul>
-										<li>titulo menu</li>
-										<ul>
-											<li>Consectetur </li>
-											<li>Integer molestie </li>
-											<li>Facilisis in pretium </li>
-										</ul>
-									</ul>
-									<ul>
-										<li>titulo menu 2</li>
-										<ul>
-											<li>Phasellus </li>
-											<li>Purus </li>
-											<li>Vestibulum laoreet </li>
-											<li>Ac tristique </li>
-										</ul>
-									</ul>
-								</div>
-								<!-- /.card-body -->
-							</div>
-							<!-- /.card -->
-						</div>
+					
 
 					</div>
 					<!-- /.card -->

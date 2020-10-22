@@ -64,4 +64,19 @@ class MenuModel extends Mysql {
 		}
 		return $request;
 	}
+	/**
+	 * funciones para obtener lista de usuarios y menu
+	 */
+	public function listaUser(){
+		// $sql = "SELECT a.user_nombres,a.user_nick, b.rol_name FROM table_user a INNER JOIN table_roles b ON a.user_rol = b.rol_id WHERE a.user_status= 1 ORDER BY b.rol_id ";
+		$sql = "SELECT a.user_nombres,a.user_nick, b.rol_name FROM table_user a JOIN  table_roles b JOIN  table_user_rol c WHERE a.user_nick = c.user_nick AND a.user_rol = b.rol_id AND a.user_status= 1 ORDER BY b.rol_id; ";
+		$request = $this->select_all($sql);
+		return $request;
+	}
+	public function listaMenu(string $strNick){
+		$this->strNick = $strNick;
+		$sql = "SELECT id_menu, nombre_menu, icono, id_sub_menu, nombre_sub_menu, url,page_menu_open,page_link, page_link_activo   FROM  `v_carga_menu` WHERE login = '$this->strNick' ORDER BY nombre_menu asc";
+		$request = $this->select_all($sql);
+		return $request;
+	}
 }

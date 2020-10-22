@@ -144,7 +144,43 @@ class Menu extends Controllers{
 		$data['page_link'] = "menus";//menu
 		$data['page_menu_open'] = "menu";//menu
 		$data['page_link_acitvo'] = "link-lista";//para submenu
-		$data['page_functions'] = "function.menu.js";
+		$data['page_functions'] = "function.lista.js";
 		$this->views->getViews($this, "lista", $data);
+	}
+
+	public function listMenu(){
+		$htmlOptions = "";
+		$id_menu = "";
+		$selectuser = $this->model->listaUser();
+		foreach ($selectuser as $key ) {
+			$request = $this->model->listaMenu($key['user_nick']);
+			$htmlOptions .= '<div class="col-md-4">
+												<div class="card">
+													<div class="card-header">
+														<h3 class="card-title text-center">
+															'.$key['user_nombres'].'<strong class="ml-2">('.$key['rol_name'].')</strong>
+														</h3>
+													</div>
+													<!-- /.card-header -->
+													<div class="card-body">
+													';
+			foreach ($request as $dat) {
+				if ($id_menu <> $dat["id_menu"]){
+					if ($id_menu <> ""){
+						$htmlOptions.= "</ul></li>";
+					}
+					$htmlOptions.= "<li class='sub-menu '>";
+                    $htmlOptions.= "<a href='javascript:;' >";
+                    $htmlOptions.= '<span>'.$dat["nombre_menu"].'</span></a><ul class="sub">';
+					$id_menu = $dat["id_menu"];
+				}
+				$htmlOptions.= '<li><a href="http://localhost/menu/">'.$dat["nombre_sub_menu"].'</a></li>';
+			}
+				$htmlOptions .='</div>
+											</div>
+										</div>';
+		}
+		echo $htmlOptions;
+		die();
 	}
 }
