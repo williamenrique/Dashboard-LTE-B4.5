@@ -185,55 +185,7 @@
 				</div>
 
 				<!-- Sidebar Menu -->
-<<<<<<< HEAD
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-						<!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-						<li class="nav-item dashboard">
-							<a href="<?= base_url()?>dashboard" class="nav-link dashboard-link">
-								<i class="nav-icon fas fa-tachometer-alt"></i>
-								<p>Dashboard</p>
-							</a>
-						</li>
-						<li class="nav-item user-menu ">
-							<a href="#" class="nav-link usuarios">
-								<i class="nav-icon fas fa-user"></i>
-								<p>Usuarios<i class="right fas fa-angle-left"></i></p>
-							</a>
-							<ul class="nav nav-treeview ">
-								<li class="nav-item link-roles">
-									<a href="<?= base_url()?>roles" class="nav-link ">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Roles</p>
-									</a>
-								</li>
-								<li class="nav-item link-user">
-									<a href="<?= base_url()?>usuarios" class="nav-link ">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Usuarios</p>
-									</a>
-								</li>
-								<li class="nav-item link-alta">
-									<a href="<?= base_url()?>usuarios/alta" class="nav-link ">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Usuarios de alta</p>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item timeLine">
-							<a href="<?= base_url()?>timeLine" class="nav-link timeLine-link">
-								<i class="nav-icon fas fa-clock"></i>
-								<p>Timeline</p>
-							</a>
-						</li>
-
-					</ul>
-				</nav>
-=======
 				<?php require_once 'aside.php'?>
->>>>>>> Menu
 				<!-- /.sidebar-menu -->
 			</div>
 			<div class="sidebar-custom d-flex justify-content-around">
