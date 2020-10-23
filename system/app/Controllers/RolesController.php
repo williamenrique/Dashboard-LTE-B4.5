@@ -78,40 +78,47 @@ class Roles extends Controllers{
 	}
 
 	/****************************************
-	 * funcion de guardar rol
+	 * funcion de guardar nuevo rol
 	 ***************************************/
 	public function setRol(){
 		//almacenar los datos en variables
 	 	$strRol = $_POST["txtnombre"];
 		$strDescripcion = $_POST['txtdescripcion'];
-		$intStatus = intVal($_POST['selectStatus']);
 		$intIdRol = intVal($_POST['idRol']);
-		
-		//i el id viene en vacio o 0 quiere decir que debemos crear un nuevo rol
-		if($intIdRol == 0){
-			//enviamos los datos al modelo crear
-			$request_rol = $this->model->insertRol($strRol,$strDescripcion,$intStatus);
-			$option = 1;
+		if($strRol == ""){
+			$arrResponse = array('status'=> false,'msg' => 'Debe llenar el nombre'); 
 		}else{
-			//si trae en id actualizamos 
-			$request_rol = $this->model->updateRol($intIdRol,$strRol,$strDescripcion,$intStatus);
-			$option = 2;
-		}
-		//validamos la respuesta del modelo
-		if($request_rol > 0){
-			/********************************************************************************
-			si es mayor a 0 indica que si se ejecuto el query y hacemos otra validacion
-				si obtenemos respuesta de 1 fue un insert si no fue actualizado
-			**********************************************************************************/
-			if($option == 1){
-				$arrResponse = array('status'=> true,'msg' => 'Datos guardados correctamente'); 
+			if(!isset($_POST['radioStatus'])){
+				$arrResponse = array('status'=> false,'msg' => 'Debe seleccionar un status'); 
 			}else{
-				$arrResponse =  array('status'=> true,'msg' => 'Datos actualizados correctamente'); 
+				$intStatus = intVal($_POST['radioStatus']);
+				//i el id viene en vacio o 0 quiere decir que debemos crear un nuevo rol
+				if($intIdRol == 0){
+					//enviamos los datos al modelo crear
+					$request_rol = $this->model->insertRol($strRol,$strDescripcion,$intStatus);
+					$option = 1;
+				}else{
+					//si trae en id actualizamos 
+					$request_rol = $this->model->updateRol($intIdRol,$strRol,$strDescripcion,$intStatus);
+					$option = 2;
+				}
+				//validamos la respuesta del modelo
+				if($request_rol > 0){
+					/********************************************************************************
+					si es mayor a 0 indica que si se ejecuto el query y hacemos otra validacion
+						si obtenemos respuesta de 1 fue un insert si no fue actualizado
+					**********************************************************************************/
+					if($option == 1){
+						$arrResponse = array('status'=> true,'msg' => 'Datos guardados correctamente'); 
+					}else{
+						$arrResponse =  array('status'=> true,'msg' => 'Datos actualizados correctamente'); 
+					}
+				}else if($request_rol == 'exist'){
+					$arrResponse = array('status'=> false,'msg' => '¡Atención El Rol ya existe.'); 
+				}else{
+					$arrResponse = array('status'=> false,'msg' => '¡No es posible almacenar los datos.'); 
+				}
 			}
-		}else if($request_rol == 'exist'){
-			$arrResponse = array('status'=> false,'msg' => '¡Atención El Rol ya existe.'); 
-		}else{
-			$arrResponse = array('status'=> false,'msg' => '¡No es posible almacenar los datos.'); 
 		}
 		echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
 		die();
@@ -120,7 +127,7 @@ class Roles extends Controllers{
 	 * funcion de eliminar rol
 	 ***************************************/
 	public function delRol(){
-	//si hay una peticion POST abrimos el doc
+		//si hay una peticion POST abrimos el doc
 		if($_POST){
 				$intIdRol = intval($_POST['idRol']);
 				$requestDel = $this->model->deleteRol($intIdRol);
@@ -134,6 +141,5 @@ class Roles extends Controllers{
 				echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
 			die();
 		}
-
 	}
 }

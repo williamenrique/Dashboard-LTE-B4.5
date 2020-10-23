@@ -60,11 +60,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		let intIdRol = document.querySelector('#idRol').value;
 		let strNombre = document.querySelector('#txtnombre').value;
 		let strDescripcion = document.querySelector('#txtdescripcion').value;
-		let strStatus = document.querySelector('#selectStatus').value;
-		if (strNombre == '' || strDescripcion == '' || strStatus == '') {
-			Swal.fire('Todos los campos deben ser llenados!', 'Oops...', 'error',);
-			return false;
-		}
+		// let strStatus = document.querySelector('#selectStatus').value;
+		var radioOption = $('[name="radioStatus"]:checked').val();
+		// if (strNombre == '' || strDescripcion == '' || strStatus == '') {
+		// 	Swal.fire('Todos los campos deben ser llenados!', 'Oops...', 'error',);
+		// 	return false;
+		// }
 		//hacer una validacion para diferentes navegadores y crear el formato de lectura y hacemos la peticion mediante ajax
 		//usando un if reducido creamos un objeto del contenido en (request)
 		let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -75,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		request.open('POST', ajaxUrl, true);
 		//envio de datos del formulario que se almacena enla variable
 		request.send(formData);
-
 		//despues del envio retornamos una funcion con los datos
 		request.onreadystatechange = function () {
 			//validamos la respuesta del servidor al enviar los datos
@@ -83,11 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
 				//obtener el json y convertirlo a un objeto en javascript
 				var objData = JSON.parse(request.responseText);
 				//condionamos la respuesta del array del controlador
-
 				if (objData.status) {
 					$('#modalRol').modal('hide');
 					formRol.reset();
-					Swal.fire('Roles de usuario', objData.msg, 'success');
+					notifi(objData.msg, 'success');
 					//refrescamos el dataTable
 					let tableRoles = $('#tableRol').DataTable();
 					//recargamos la tabla 
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 						// fntDelRol();
 					});
 				} else {
-					Swal.fire('Disculpe....', objData.msg, 'error');
+					notifi(objData.msg, 'error');
 				}
 			}
 		};
