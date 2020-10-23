@@ -37,7 +37,7 @@
 							</h3>
 							<form id="formRol">
 								<input type="hidden" name="idRol" id="idRol" value="">
-								<span>Agrege un nuevo rol con descripcion y estatus</span>
+								<span id="title">Agrege un nuevo rol con descripcion y estatus</span>
 								<div class="form-row align-items-center">
 									<div class="col-sm-3 my-1">
 										<label class="sr-only" for="inlineFormInputName">Nombre del Rol</label>
@@ -49,7 +49,7 @@
 										<input type="text" class="form-control" placeholder="Breve descripcion" id="txtdescripcion"
 											name="txtdescripcion">
 									</div>
-									<div class="col-auto my-1">
+									<div class="col-auto my-1 statusRol">
 										<div class="form-check ml-2">
 											<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2" checked>
 											<label class="form-check-label" for="status2">Inactivo</label>
@@ -61,7 +61,7 @@
 									</div>
 									<div class="col-auto my-1">
 										<button type="submit" id="btnActionForm" class="btn btn-primary btn-sm ml-3"> <i
-												class="fas fa-plus"></i>Agregar</button>
+												class="fas fa-plus"></i><span id="btnText">Agregar</span></button>
 									</div>
 								</div>
 							</form>

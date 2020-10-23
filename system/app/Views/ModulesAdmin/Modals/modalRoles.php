@@ -19,11 +19,8 @@
   						<label for="" class="control-label">Descripcion</label>
   						<textarea type="text" rows="2" id="txtdescripcion" name="txtdescripcion" class="form-control"></textarea>
   					</div>
-  					<div class="col-md-6 mb-6">
-  						<select class="custom-select" id="selectStatus" name="selectStatus" required>
-  							<option value="1">Activo</option>
-  							<option value="2">Inactivo</option>
-  						</select>
+  					<div class="col-md-6 mb-6 statusRol">
+
   						<div class="invalid-feedback">
   							Please select a valid state.
   						</div>

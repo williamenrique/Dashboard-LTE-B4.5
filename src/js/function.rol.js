@@ -62,10 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		let strDescripcion = document.querySelector('#txtdescripcion').value;
 		// let strStatus = document.querySelector('#selectStatus').value;
 		var radioOption = $('[name="radioStatus"]:checked').val();
-		// if (strNombre == '' || strDescripcion == '' || strStatus == '') {
-		// 	Swal.fire('Todos los campos deben ser llenados!', 'Oops...', 'error',);
-		// 	return false;
-		// }
 		//hacer una validacion para diferentes navegadores y crear el formato de lectura y hacemos la peticion mediante ajax
 		//usando un if reducido creamos un objeto del contenido en (request)
 		let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -129,8 +125,8 @@ window.addEventListener('load', function () {
  ****************************/
 function fntEditRol(idRol) {
 	//acceder al modal y modificar su apariencia en color de header y el texto de los botones
-	document.querySelector('#titleModal').innerHTML = 'Actualizar Rol';
-	document.querySelector('.modal-header').classList.replace('headerRegistrer', 'headerUpdate');
+	document.querySelector('#title').innerHTML = 'Actualizar Rol';
+	// document.querySelector('.modal-header').classList.replace('headerRegistrer', 'headerUpdate');
 	document.querySelector('#btnActionForm').classList.replace('btn-primary', 'btn-info');
 	document.querySelector('#btnText').innerHTML = 'Actualizar';
 	//ejecutamos el ajax para obtener los datos del rol 
@@ -153,22 +149,36 @@ function fntEditRol(idRol) {
 				document.querySelector('#txtdescripcion').value = objData.data.rol_descripcion;
 				if (objData.data.rol_status == 1) {
 					/*********************************************************
-					 * colocar el select con el valor obtenido
+					 * colocar el radio con el valor obtenido
 					 * para evitar que se repita la opcion en 
 					 * el select utilizamos una clase creada en css  notBlock
 					 ********************************************************/
-					var optionSelect = '<option value="1" selected class="notBlock">Activo</option>';
+					//preparamos el valor de la variable en formato html
+					var htmlRadio = `	<div class="form-check ml-2">
+															<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2">
+															<label class="form-check-label" for="status2">Inactivo</label>
+														</div>
+														<div class="form-check ml-2">
+															<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2" checked>
+															<label class="form-check-label" for="status1">Activo</label>
+														</div>
+													</div>
+									`;
 				} else {
-					var optionSelect = '<option value="2" selected class="notBlock">Inactivo</option>';
-				}
-				//preparamos el valor de la variable en formato html
-				var htmlSelect = `${optionSelect}
-													<option value="1">Activo</option>
-													<option value="2">Inactivo</option>
+					var htmlRadio = `	<div class="form-check ml-2">
+														<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2" checked>
+														<label class="form-check-label" for="status2">Inactivo</label>
+														</div>
+														<div class="form-check ml-2">
+														<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2">
+														<label class="form-check-label" for="status1">Activo</label>
+														</div>
+													</div>
 												`;
+				}
 				//colocarle en el html un elemnto
-				document.querySelector('#selectStatus').innerHTML = htmlSelect;
-				$('#modalRol').modal('show');
+				document.querySelector('.statusRol').innerHTML = htmlRadio;
+				// $('#modalRol').modal('show');
 			} else {
 				Swap.fire('Error', objData.msg, 'error');
 			}
