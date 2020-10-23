@@ -345,7 +345,7 @@ function fntDelUser(idUser) {
 								title: objData.msg
 							})
 						})
-												//Swal.fire('Proceso Exitoso!', objData.msg, 'success');
+						//Swal.fire('Proceso Exitoso!', objData.msg, 'success');
 						let tableRoles = $('#tableRol').DataTable();
 						tableUser.ajax.reload(function () {
 							//cada vez que se haga una accion se recarga la tabla y los botones
