@@ -127,7 +127,7 @@ function fntEditRol(idRol) {
 	//acceder al modal y modificar su apariencia en color de header y el texto de los botones
 	document.querySelector('#title').innerHTML = 'Actualizar Rol';
 	// document.querySelector('.modal-header').classList.replace('headerRegistrer', 'headerUpdate');
-	document.querySelector('#btnActionForm').classList.replace('btn-primary', 'btn-info');
+	document.querySelector('#btnActionForm').classList.replace('btn-primary', 'btn-success');
 	document.querySelector('#btnText').innerHTML = 'Actualizar';
 	//ejecutamos el ajax para obtener los datos del rol 
 	var idRol = idRol;//refiriendono a a este atributo rl

@@ -36,9 +36,9 @@ class Roles extends Controllers{
 				$arrData[$i]['rol_status'] = '<h5><span class="badge badge-warning">Inactivo</span><h5>';
 			}
 			$arrData[$i]['opciones'] ='<div class="">
-																	<button type="button" class="btn btn-secondary btn-sm btnPremisoRol" onClick="fntRol('.$arrData[$i]['rol_id'].')" title="Permisos"><i class="fa fa-key" aria-hidden="true"></i></button>
-																	<button type="button" class="btn btn-success btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['rol_id'].')" title="Editar" ><i class="fa fa-edit" aria-hidden="true"></i></button>
-																	<button type="button" class="btn btn-danger btn-sm btnDelRol" onClick="fntDelRol('.$arrData[$i]['rol_id'].')" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></button>
+																	<a href="#" class="btn btn-secondary btn-sm btnPremisoRol" onClick="fntRol('.$arrData[$i]['rol_id'].')" title="Permisos"><i class="fa fa-key" aria-hidden="true"></i></a>
+																	<a href="#edit" class="btn btn-success btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['rol_id'].')" title="Editar" ><i class="fa fa-edit" aria-hidden="true"></i></a>
+																	<a href="button" class="btn btn-danger btn-sm btnDelRol" onClick="fntDelRol('.$arrData[$i]['rol_id'].')" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
 																</div>';
 		}
 		//convertir el arreglo de datos en un formato json
