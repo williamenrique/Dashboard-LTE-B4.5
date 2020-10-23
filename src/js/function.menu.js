@@ -5,23 +5,7 @@ window.addEventListener('load', function () {
 	ftnSubMenu();
 }, false)
 
-/****
- * funcion para la notificacion
- */
-function notifi(data, icon) {
-	$(function () {
-		var Toast = Swal.mixin({
-			toast: true,
-			position: 'top-end',
-			showConfirmButton: false,
-			timer: 3000
-		})
-		Toast.fire({
-			icon: icon,
-			title: data
-		})
-	})
-}
+
 /************
  * envio de formulario de asociar menu con submenu
  */
@@ -142,11 +126,9 @@ function ftnSubMenu() {
  * llamar al submenu dependiendo el menu
  * en el select
  */
-var menu = document.querySelector('.radio');
-menu.addEventListener('change', function () {
-	alert();
-	var selectedOption = this.options[menu.selectedIndex];
-	let ajaxUrl = base_url + "Menu/getSubs/" + selectedOption.value;
+$(document).on("change", "input[name='menuR']", function () {
+	var radioOption = $('[name="menuR"]:checked').val();
+	let ajaxUrl = base_url + "Menu/getSubs/" + radioOption;
 	//creamos el objeto para os navegadores
 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 	//abrimos la conexion y enviamos los parametros para la peticion
@@ -159,23 +141,6 @@ menu.addEventListener('change', function () {
 		}
 	}
 });
-// var menu = document.querySelector('#listMenuAsignar');
-// menu.addEventListener('change',function(){
-// 	var selectedOption = this.options[menu.selectedIndex];
-// 	let ajaxUrl = base_url + "Menu/getSubs/" + selectedOption.value;
-// 	//creamos el objeto para os navegadores
-// 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-// 	//abrimos la conexion y enviamos los parametros para la peticion
-// 	request.open("GET", ajaxUrl, true);
-// 	request.send();
-// 	request.onreadystatechange = function () {
-// 		if (request.readyState == 4 && request.status == 200) {
-// 			//option obtenidos del controlador
-// 			document.querySelector('.listSubmenuAsignar').innerHTML = request.responseText;
-// 		}
-// 	}
-// });
-
 /**
  * despues de obtener los submenu enviamos el formulario
  * con el rol y el submenu
@@ -200,7 +165,8 @@ if (document.querySelector(".formMenuAsignar")) {
 				//leemos el ststus de la respuesta
 				if (objData.status) {
 					// Swal.fire('Asignacion correcta', objData.msg, 'success');
-					notifi(objData.msg,'success');
+					notifi(objData.msg, 'success');
+					formMenuAsignar.reset();
 				} else {
 					notifi(objData.msg,'error');
 				}

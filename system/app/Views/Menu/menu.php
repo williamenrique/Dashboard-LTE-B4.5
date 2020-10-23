@@ -74,7 +74,7 @@
 										</div>
 										<!-- /.tab-pane -->
 										<div class="tab-pane" id="asignar">
-											<form class="formMenuAsignar">
+											<form class="formMenuAsignar" id="formMenuAsignar">
 												<div class="form-row">
 													<div class="col-md-4 mb-3">
 														<label for="listrol">Seleccione Cargo</label>

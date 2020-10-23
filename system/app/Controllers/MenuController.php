@@ -37,31 +37,9 @@ class Menu extends Controllers{
 		echo $htmlOptions;
 		die();
 	}
-	// public function getRoles(){
-	// 	$htmlOptions = "";
-	// 	$arrData = $this->model->selectRoles();
-	// 	if(count($arrData) > 0){
-	// 		$htmlOptions .= '<option value="noselected">Seleccione</option>';
-	// 		for ($i=0; $i < count($arrData); $i++) { 
-	// 			$htmlOptions .= '<option value="'.encryption($arrData[$i]['rol_id']).'">'.$arrData[$i]['rol_name'].'</option>';
-	// 		}
-	// 	}
-	// 	echo $htmlOptions;
-	// 	die();
-	// }
-	//obtener los menu
-	// public function getMenu(){
-	// 	$htmlOptions = "";
-	// 	$arrData = $this->model->selectMenu();
-	// 	if(count($arrData) > 0){
-	// 		$htmlOptions .= '<option value="noselected">Seleccione</option>';
-	// 		for ($i=0; $i < count($arrData); $i++) { 
-	// 			$htmlOptions .= '<option value="'.$arrData[$i]['id_menu'].'">'.$arrData[$i]['nombre_menu'].'</option>';
-	// 		}
-	// 	}
-	// 	echo $htmlOptions;
-	// 	die();
-	// }
+	/******
+	 * obtener los menu para el asociarlos con el sub menu 
+	 */
 	public function getMenu(){
 		$htmlOptions = "";
 		$arrData = $this->model->selectMenu();
@@ -79,23 +57,6 @@ class Menu extends Controllers{
 		echo $htmlOptions;
 		die();
 	}
-		public function getMenuA(){
-		$htmlOptions = "";
-		$arrData = $this->model->selectMenu();
-		if(count($arrData) > 0){
-			// $htmlOptions .= '<option value="noselected">Seleccione</option>';
-			for ($i=0; $i < count($arrData); $i++) { 
-				$htmlOptions .= '<div class="custom-control custom-radio">
-														<input class="custom-control-input custom-control-input-danger radio" type="radio"
-															id="menuR-'.$arrData[$i]['nombre_menu'].'" name="menu" value="'.$arrData[$i]['id_menu'].'">
-														<label for="menuR-'.$arrData[$i]['nombre_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_menu'].'</label>
-													</div>
-												</div>';
-			}
-		}
-		echo $htmlOptions;
-		die();
-	}
 	// obtener los submenu parte 1
 	public function getSubMenu(){
 		$htmlOptions = "";
@@ -106,6 +67,26 @@ class Menu extends Controllers{
 												  <input class="custom-control-input" type="checkbox" id="'.$arrData[$i]['nombre_sub_menu'].'" name="subMenu[]" value="'.$arrData[$i]['id_sub_menu'].'">
 												  <label for="'.$arrData[$i]['nombre_sub_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_sub_menu'].'</label>
 											   </div>';
+			}
+		}
+		echo $htmlOptions;
+		die();
+	}
+	/******
+	 * obtener los menu para el asociar el rol con el submenu
+	 */
+	public function getMenuA(){
+		$htmlOptions = "";
+		$arrData = $this->model->selectMenu();
+		if(count($arrData) > 0){
+			// $htmlOptions .= '<option value="noselected">Seleccione</option>';
+			for ($i=0; $i < count($arrData); $i++) { 
+				$htmlOptions .= '<div class="custom-control custom-radio">
+														<input class="custom-control-input custom-control-input-danger radioMenu" type="radio"
+															id="menuR-'.$arrData[$i]['nombre_menu'].'" name="menuR" value="'.$arrData[$i]['id_menu'].'">
+														<label for="menuR-'.$arrData[$i]['nombre_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_menu'].'</label>
+													</div>
+												</div>';
 			}
 		}
 		echo $htmlOptions;
@@ -131,99 +112,44 @@ class Menu extends Controllers{
 		echo $htmlOptions;
 		die();
 	}
-	// public function getSubs($intIdMenu){
-	// 	$htmlOptions = "";
-	// 	if($intIdMenu != 'noselected'){
-	// 		$arrData = $this->model->getSubMenu($intIdMenu);
-	// 		if(count($arrData) > 0){
-	// 			$htmlOptions .= '	<label for="listSubmenuAsignar">Seleccione Submenu</label>
-	// 														<div class="form-group">';
-	// 			for ($i=0; $i < count($arrData); $i++) { 
-	// 				$htmlOptions .= '<div class="custom-control custom-checkbox">
-	// 													<input class="custom-control-input" type="checkbox" id="asig_'.$arrData[$i]['nombre_sub_menu'].'" name="subMenu[]" value="'.$arrData[$i]['id_sub_menu'].'">
-	// 													<label for="asig_'.$arrData[$i]['nombre_sub_menu'].'" class="custom-control-label">'.$arrData[$i]['nombre_sub_menu'].'</label>
-	// 												 </div>';
-	// 			}
-	// 			$htmlOptions .= '</div>';
-	// 		}
-	// 	}
-	// 	echo $htmlOptions;
-	// 	die();
-	// }
 	/**********
 	 * funciones para asociar los menu a los submenu
 	 * y los roles
 	 */
 	// asociar menu con submenu
-	// public function setMenuSub(){
-	// 	if($_POST['listMenu'] == "noselected"){
-	// 		$arrResponse = array("status" => false, "msg" => "Debe seleccionar un menu");
-	// 	}else{
-	// 			if(!isset($_POST['subMenu'])){
-	// 				$arrResponse = array("status" => false, "msg" => "Debe seleccionar al menos un submenu");
-	// 		}else{
-	// 			$intIdMenu = $_POST['listMenu'];
-	// 			$intIdSubMenu = $_POST['subMenu'];
-	// 			$request = $this->model->insertMenuSub($intIdMenu,$intIdSubMenu);
-	// 			if($request > 0){
-	// 				$arrResponse = array("status" => true, "msg" => "Menu y submenu agregados correctamente");
-	// 			}else{
-	// 				$arrResponse = array("status" => false, "msg" => "Error en la asignacion de menu");
-	// 			}
-	// 		}
-	// 	}
-	// 	echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-	// 	die();
-	// }
-		public function setMenuSub(){
-			if(!isset($_POST['menu'])){
-				$arrResponse = array("status" => false, "msg" => "Debe seleccionar un menu");
-
+	public function setMenuSub(){
+		if(!isset($_POST['menu'])){
+			$arrResponse = array("status" => false, "msg" => "Debe seleccionar un menu");
+		}else{
+			if(!isset($_POST['subMenu'])){
+				$arrResponse = array("status" => false, "msg" => "Debe seleccionar al menos un submenu");
 			}else{
-				if(!isset($_POST['subMenu'])){
-					$arrResponse = array("status" => false, "msg" => "Debe seleccionar al menos un submenu");
+				$intIdMenu = $_POST['menu'];
+				$intIdSubMenu = $_POST['subMenu'];
+				$request = $this->model->insertMenuSub($intIdMenu,$intIdSubMenu);
+				if($request > 0){
+					$arrResponse = array("status" => true, "msg" => "Menu y submenu agregados correctamente");
 				}else{
-					$intIdMenu = $_POST['menu'];
-					$intIdSubMenu = $_POST['subMenu'];
-					$request = $this->model->insertMenuSub($intIdMenu,$intIdSubMenu);
-					if($request > 0){
-						$arrResponse = array("status" => true, "msg" => "Menu y submenu agregados correctamente");
-					}else{
-						$arrResponse = array("status" => false, "msg" => "Error en la asignacion de menu");
-					}
+					$arrResponse = array("status" => false, "msg" => "Error en la asignacion de menu");
 				}
 			}
-		// if($_POST['listMenu'] == "noselected"){
-		// }else{
-		// 		if(!isset($_POST['subMenu'])){
-		// 			$arrResponse = array("status" => false, "msg" => "Debe seleccionar al menos un submenu");
-		// 	}else{
-		// 		$intIdMenu = $_POST['listMenu'];
-		// 		$intIdSubMenu = $_POST['subMenu'];
-		// 		$request = $this->model->insertMenuSub($intIdMenu,$intIdSubMenu);
-		// 		if($request > 0){
-		// 			$arrResponse = array("status" => true, "msg" => "Menu y submenu agregados correctamente");
-		// 		}else{
-		// 			$arrResponse = array("status" => false, "msg" => "Error en la asignacion de menu");
-		// 		}
-		// 	}
-		// }
+		}
 		echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 		die();
 	}
-	// envio de datos asociar rol y submenu
+// envio de datos asociar rol y submenu
 	public function setRolSub(){
-		if($_POST['listrol'] == 'noselected'){
-			$arrResponse = array("status" => false, "msg" => "Debe seleccionar un rol");
+		if(!isset($_POST['roles'])){
+				$arrResponse = array("status" => false, "msg" => "Debe seleccionar un Cargo");
 		}else{
-			if($_POST['listMenuAsignar'] == 'noselected'){
-				$arrResponse = array("status" => false, "msg" => "Debe seleccionar un menu");
+			if(!isset($_POST['menuR'])){
+				$arrResponse = array("status" => false, "msg" => "Debe seleccionar un Menu");
 			}else{
 				if(!isset($_POST['subMenu'])){
 					$arrResponse = array("status" => false, "msg" => "Debe seleccionar al menos un submenu");
 				}else{
 					$intIdSubMenu = $_POST['subMenu'];
-					$intIdRol = decryption($_POST['listrol']);
+					$intIdRol = decryption($_POST['roles']);
 					$request = $this->model->insertRolSub($intIdRol,$intIdSubMenu);
 					if($request > 0){
 						$arrResponse = array("status" => true, "msg" => "Asignacion de rol y submenu exitoso");
@@ -236,7 +162,6 @@ class Menu extends Controllers{
 		echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 		die();
 	}
-
 	/***********
 	 * funcion para vista de usuarios menu
 	 */
