@@ -76,7 +76,6 @@ function sessionUser(int $idUser){
 	return $request;
 }
 
-<<<<<<< HEAD
 function endTimeline(string $strCodigo,string $strHoraFin){
 	require_once ("system/app/Models/TimeLineModel.php");
 	$objTimeLine = new TimeLineModel();
@@ -89,8 +88,6 @@ function setTimeline(int $intIdUser, string $strCodigo, string $strFecha, string
 	$request = $objTimeLine->setTimeline($intIdUser,$strCodigo,$strFecha,$strHoraInicio);
 	return $request;
 }
-=======
->>>>>>> Menu
 function strClean($srtCadena){
 	$string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''],$srtCadena);
 	$string = trim($srtCadena);
