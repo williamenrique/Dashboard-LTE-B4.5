@@ -43,17 +43,17 @@
 									</div>
 									<div class="col-auto my-1 statusRol">
 										<div class="form-check ml-2">
-											<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2" checked>
+											<input class="form-check-input" type="radio" name="radioStatus" id="status2" value="2" checked>
 											<label class="form-check-label" for="status2">Inactivo</label>
 										</div>
 										<div class="form-check ml-2">
-											<input class="form-check-input" type="radio" name="radioStatus" id="status2" value="1">
+											<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="1">
 											<label class="form-check-label" for="status1">Activo</label>
 										</div>
 									</div>
 									<div class="col-auto my-1">
-										<a type="submit" id="btnActionForm" class="btn btn-primary btn-sm ml-3"> <i
-												class="fas fa-plus"></i><span id="btnText">Agregar</span></a>
+										<button type="submit" id="btnActionForm" class="btn btn-primary btn-sm ml-3"> <i
+												class="fas fa-plus"></i><span id="btnText">Agregar</span></button>
 									</div>
 								</div>
 							</form>
