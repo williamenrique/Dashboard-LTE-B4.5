@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		formUser.onsubmit = function (e) {
 			e.preventDefault();
 			//obenemos todos los valores del formulario  txtIdentificacion
+			let intIngreso =  document.querySelector('#ingreso').value;
 			var strIdentificacion = document.querySelector('#txtIdentificacion').value;
 			var strTxtNombre = document.querySelector('#txtNombres').value;
 			var strtxtApellidos = document.querySelector('#txtApellidos').value;
@@ -134,11 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			var strTxtEmail = document.querySelector('#txtEmail').value;
 			var strListStatus = document.querySelector('#listStatus').value;
 			var intlistRolId = document.querySelector('#listRolId').value;
-			//validamos campos no vacios
-			if (strIdentificacion == '' || strTxtNombre == '' || strtxtApellidos == '' || intTxtTlf == '' || strTxtEmail == '' || intlistRolId == '') {
-				Swal.fire('Todos los campos deben ser llenados!', 'Oops...', 'error');
-				return false;
-			}
 			/************************************************* 
 			* creamos el objeto de envio para tipo de navegador
 			* hacer una validacion para diferentes navegadores y crear el formato de lectura
@@ -160,16 +156,12 @@ document.addEventListener('DOMContentLoaded', function () {
 					let objData = JSON.parse(request.responseText);
 					//leemos el ststus de la respuesta
 					if (objData.status) {
+						notifi(objData.msg, 'success');
 						$("#modalUser").modal("hide");
 						formUser.reset();
-						Swal.fire('Usuario', objData.msg, 'success');
 						tableUser.ajax.reload();
 					} else {
-						Swal.fire({
-							icon: 'error',
-							title: 'Oops...',
-							text: objData.msg
-						})
+						notifi(objData.msg, 'error');
 					}
 				}
 			}

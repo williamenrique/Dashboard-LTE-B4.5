@@ -22,64 +22,100 @@ class Usuarios extends Controllers{
 	}
 
 	public function setUser(){
-		//validacion POSt
 		if($_POST){
-			//valifdamos si no existe algun valor
-			if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombres'] )|| empty($_POST['txtApellidos'] ) || empty($_POST['txtTlf']) || empty($_POST['txtEmail']) || empty($_POST['listStatus']) || empty($_POST['listRolId'])) {
-				$arrResponse = array("status" => false, "msg" => "Debe llenar los campos");
-			}else {
-				//almacenamos el id del usuario 
-				$idUser = intval($_POST['idUsuario']);
-				$intIdentificacion = intval(strClean($_POST['txtIdentificacion']));
-				$strTxtNombre = ucwords(strClean($_POST['txtNombres']));//convierte las primeras letras en mayusculas
-				$strtxtApellidos = ucwords(strClean($_POST['txtApellidos']));//convierte las primeras letras en mayusculas
-				$intTxtTlf = intval(strClean($_POST['txtTlf']));
-				$strTxtEmail = strtolower($_POST['txtEmail']);//convierte todas las letras en minusculas
-				$intListStatus = intval($_POST['listStatus']);
-				$intlistRolId = intval($_POST['listRolId']);
-				//validamos is la variable idUsuario viene vacia o no
-				if($idUser == 0){
-				/*********************
-				* crear una variable password si esta vacio se genera un password
-				* encriptada  para que no sea vista
-				*/
-				$option = 1;
-				$strTxtPass = encryption(passGenerator());
-				//al generar el pass se envia al modelo
-				$requestUser = $this->model->insertUser($intIdentificacion, $strTxtNombre, $strtxtApellidos, $intTxtTlf, $strTxtEmail, $intListStatus, $intlistRolId, $strTxtPass);
-				//opcion para actualizar el nick al crearse el usuario
-				$intOption = 2;
-				$userNIck =  substr($strTxtNombre,0,1).substr($strtxtApellidos,0,1).'-0'.$requestUser;
-				$fileBase = "system/app/Views/Docs/". $userNIck . "/";
-				//$fileHash = substr(md5($fileBase . uniqid(microtime() . mt_rand())), 0, 8);
-				// creo carpeta en servidor si no existe
-				if (!file_exists($fileBase))
-					mkdir($fileBase, 0777, true);
-				$sqlUpdate = $this->model->updatePerfil($requestUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$intIdentificacion,$strTxtEmail, $strTxtPass, $userNIck, $intOption,$fileBase);
-	
-			}else{
-				$option = 2;
-				$requestUser = $this->model->updateRolUser($idUser,$intIdentificacion,$strTxtEmail,$intlistRolId);
-			}
-			//obtenemos la respuesta y validamos
-			if($requestUser > 0){
-				if($option == 1){
-					//validamos la respuesta si option es 1 enviamos el msj de inserto
-					$arrResponse = array("status" => true, "msg" => "Datos guardados correctamente");
+			if($_POST['ingreso'] == 1){
+				if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombres'] )|| empty($_POST['txtApellidos'] ) ||
+					empty($_POST['txtTlf']) || empty($_POST['txtEmail']) || empty($_POST['listStatus']) || empty($_POST['listRolId'])) {
+					$arrResponse = array("status" => false, "msg" => "Debe llenar los campos");
 				}else{
-					$arrResponse = array("status" => true, "msg" => "Cambio de rol exitoso");
+					$idUser = intval($_POST['idUsuario']);
+					$intIdentificacion = intval(strClean($_POST['txtIdentificacion']));
+					$strTxtNombre = ucwords(strClean($_POST['txtNombres']));//convierte las primeras letras en mayusculas
+					$strtxtApellidos = ucwords(strClean($_POST['txtApellidos']));//convierte las primeras letras en mayusculas
+					$intTxtTlf = intval(strClean($_POST['txtTlf']));
+					$strTxtEmail = strtolower($_POST['txtEmail']);//convierte todas las letras en minusculas
+					$intListStatus = intval($_POST['listStatus']);
+					$intlistRolId = intval($_POST['listRolId']);
 				}
-			}else if($requestUser == "exist"){
-				$arrResponse = array("status" => false, "msg" => "Atencion! email o identificacion ya existe ingrese otro");
 			}else{
-				$arrResponse = array("status" => false, "msg" => "No es posible almacenar ls datos");
+				if($_POST['ingreso'] == 2){
+					$arrResponse = array("status" => false, "msg" => "es esde el registro");
+				}
 			}
-		}
-			//convertir los datos en una array JSON para poder leerlos en javascript
 			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 		}
 		die();
 	}
+/*
+//validacion POSt
+if($_POST){
+//valifdamos si no existe algun valor
+if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombres'] )|| empty($_POST['txtApellidos'] ) ||
+empty($_POST['txtTlf']) || empty($_POST['txtEmail']) || empty($_POST['listStatus']) || empty($_POST['listRolId'])) {
+$arrResponse = array("status" => false, "msg" => "Debe llenar los campos");
+}else {
+dep($_POST);
+die();
+//almacenamos el id del usuario
+$idUser = intval($_POST['idUsuario']);
+$intIdentificacion = intval(strClean($_POST['txtIdentificacion']));
+$strTxtNombre = ucwords(strClean($_POST['txtNombres']));//convierte las primeras letras en mayusculas
+$strtxtApellidos = ucwords(strClean($_POST['txtApellidos']));//convierte las primeras letras en mayusculas
+$intTxtTlf = intval(strClean($_POST['txtTlf']));
+$strTxtEmail = strtolower($_POST['txtEmail']);//convierte todas las letras en minusculas
+$intListStatus = intval($_POST['listStatus']);
+$intlistRolId = intval($_POST['listRolId']);
+//validamos is la variable idUsuario viene vacia o no
+if($idUser == 0){
+/*********************
+ crear una variable password si esta vacio se genera un password
+ encriptada para que no sea vista
+
+$option = 1;
+$strTxtPass = encryption(passGenerator());
+//al generar el pass se envia al modelo
+$requestUser = $this->model->insertUser($intIdentificacion, $strTxtNombre, $strtxtApellidos, $intTxtTlf, $strTxtEmail,
+$intListStatus, $intlistRolId, $strTxtPass);
+//opcion para actualizar el nick al crearse el usuario
+$intOption = 2;
+$userNIck = substr($strTxtNombre,0,1).substr($strtxtApellidos,0,1).'-0'.$requestUser;
+$fileBase = "system/app/Views/Docs/". $userNIck . "/";
+//$fileHash = substr(md5($fileBase . uniqid(microtime() . mt_rand())), 0, 8);
+// creo carpeta en servidor si no existe
+if (!file_exists($fileBase))
+mkdir($fileBase, 0777, true);
+$sqlUpdate = $this->model->updatePerfil($requestUser, $strTxtNombre, $strtxtApellidos,
+$intTxtTlf,$intIdentificacion,$strTxtEmail, $strTxtPass, $userNIck, $intOption,$fileBase);
+
+}else{
+$option = 2;
+$requestUser = $this->model->updateRolUser($idUser,$intIdentificacion,$strTxtEmail,$intlistRolId);
+}
+//obtenemos la respuesta y validamos
+if($requestUser > 0){
+if($option == 1){
+//validamos la respuesta si option es 1 enviamos el msj de inserto
+$arrResponse = array("status" => true, "msg" => "Datos guardados correctamente");
+}else{
+$arrResponse = array("status" => true, "msg" => "Cambio de rol exitoso");
+}
+}else if($requestUser == "exist"){
+$arrResponse = array("status" => false, "msg" => "Atencion! email o identificacion ya existe ingrese otro");
+}else{
+$arrResponse = array("status" => false, "msg" => "No es posible almacenar ls datos");
+}
+}
+//convertir los datos en una array JSON para poder leerlos en javascript
+echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+}
+die();
+
+*/
+
+
+
+
+
 	/**************************
 	 * funcion para llamar a los usuarios
 	 *************************/

@@ -11,6 +11,7 @@
 				<form id="formUsuario" name="formUsuario" autocomplete="off">
 					<input type="hidden" id="idUsuario" name="idUsuario" value="">
 					<input type="hidden" id="opcionE" name="opcionE" value="">
+					<input type="hidden" id="ingreso" name="ingreso" value="1">
 					<div class="form-row">
 						<div class="form-group col-md-4">
 							<label for="txtIdentificacion">Identificacion</label>

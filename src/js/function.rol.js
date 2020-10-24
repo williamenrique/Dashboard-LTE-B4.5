@@ -181,7 +181,7 @@ function fntEditRol(idRol) {
 				document.querySelector('.statusRol').innerHTML = htmlRadio;
 				// $('#modalRol').modal('show');
 			} else {
-				Swap.fire('Error', objData.msg, 'error');
+				notifi(objData.msg, 'error');
 			}
 		}
 	}
