@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	let formRol = document.querySelector('#formRol');
 	formRol.onsubmit = function (e) {
 		e.preventDefault();
+
 		//obtener los datos
 		let intIdRol = document.querySelector('#idRol').value;
 		let strNombre = document.querySelector('#txtnombre').value;
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				var objData = JSON.parse(request.responseText);
 				//condionamos la respuesta del array del controlador
 				if (objData.status) {
-					$('#modalRol').modal('hide');
+					// $('#modalRol').modal('hide');
 					formRol.reset();
 					notifi(objData.msg, 'success');
 					//refrescamos el dataTable
@@ -155,7 +156,7 @@ function fntEditRol(idRol) {
 					 ********************************************************/
 					//preparamos el valor de la variable en formato html
 					var htmlRadio = `	<div class="form-check ml-2">
-															<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2">
+															<input class="form-check-input" type="radio" name="radioStatus" id="status2" value="2">
 															<label class="form-check-label" for="status2">Inactivo</label>
 														</div>
 														<div class="form-check ml-2">
@@ -166,7 +167,7 @@ function fntEditRol(idRol) {
 									`;
 				} else {
 					var htmlRadio = `	<div class="form-check ml-2">
-														<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2" checked>
+														<input class="form-check-input" type="radio" name="radioStatus" id="status2" value="2" checked>
 														<label class="form-check-label" for="status2">Inactivo</label>
 														</div>
 														<div class="form-check ml-2">
