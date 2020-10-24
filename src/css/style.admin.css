@@ -6,6 +6,19 @@
 	background-color: #007bff;
     color: #fff;
 } */
+@font-face {
+  font-family: 'Poppins';
+  /* Antes de descargar el archivo, le decimos al buscador
+  que intente buscar en local la fuente con nombre
+  Cabin, Cabin Regular o Cabin-Regular */
+  src: local('Poppins'),
+       local('Poppins-Black'),
+       local('Poppins-Medium'),
+       url(../vendors/fonts/Poppins/Poppins-Medium) format('ttf');
+}
+body {
+  font-family: 'Poppins'!important;
+}
 .activo{
 	background-color: #007BFF!important;
 	color: #fff !important;

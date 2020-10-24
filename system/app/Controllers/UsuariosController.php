@@ -258,11 +258,11 @@ class Usuarios extends Controllers{
 		$data['page_title'] = "Dashboard - Usuarios de alta";
 		$data['page_tag'] = "Usuarios de alta";
 		$data['page_name'] = "alta";
+		// $data['page_menu'] = "alta";
+		$data['page_menu_open'] = "usuario";//abrir el menu
+		$data['page_link'] = "usuarios";//activar el menu
+		$data['page_link_acitvo'] = "link-alta";//link activo submenu
 		$data['page_functions'] = "function.user.js";
-		$data['page_menu'] = "usuarios";
-		$data['page_link'] = "usuarios";
-		$data['page_menu_open'] = "user-menu";
-		$data['page_link_acitvo'] = "link-alta";
 		$this->views->getViews($this, "alta", $data);
 	}
 

@@ -16,9 +16,9 @@ class Timeline extends Controllers{
 		$data['page_userImg'] = "usuario/default.png";
 		$data['page_tag'] = "Timeline";
 		$data['page_name'] = "timeline";
-		$data['page_link'] = "timeLine";
-		$data['page_menu_open'] = "timeline-menu";
-		$data['page_link_acitvo'] = "link-timeline";
+		$data['page_menu_open'] = "timelines";//abrir el menu
+		$data['page_link'] = "times";//activar el menu
+		$data['page_link_acitvo'] = "link-time";//link activo submenu
 		$data['page_functions'] = "function.timeline.js";
 		$this->views->getViews($this, "timeline", $data);
 	}

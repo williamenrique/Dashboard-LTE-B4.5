@@ -30,13 +30,13 @@ getModal('modalUsuario',$data);
 					<!-- Default box -->
 					<div class="card">
 						<div class="card-header">
+							<h5 class="text-muted">Lista de usuarios registrados en el sistema</h5>
 							<h3>
 								<button type="button" class="btn btn-primary btn-sm mr-3" onclick="openModal()">
 									<i class="fas fa-plus"></i>
 									Agregar
 								</button>
 							</h3>
-							<h5 class="text-muted">Lista de usuarios registrados en el sistema</h5>
 						</div>
 
 						<div class="card-body">
