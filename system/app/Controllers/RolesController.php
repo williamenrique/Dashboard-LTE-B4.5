@@ -14,7 +14,7 @@ class Roles extends Controllers{
 		$data['page_title'] = "Dashboard - Roles Usuario";
 		$data['page_name'] = "roles_usuarios";
 		// $data['page_menu'] = "roles";
-		// $data['page_link'] = "usuarios";
+		$data['page_link'] = "usuarios";
 		$data['page_menu_open'] = "usuario";
 		$data['page_link_acitvo'] = "link-roles";
 		$data['page_functions'] = "function.rol.js";
