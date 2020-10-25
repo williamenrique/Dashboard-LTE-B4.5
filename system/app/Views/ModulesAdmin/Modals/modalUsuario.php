@@ -7,6 +7,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
+		
 			<div class="modal-body">
 				<form id="formUsuario" name="formUsuario" autocomplete="off">
 					<input type="hidden" id="idUsuario" name="idUsuario" value="">

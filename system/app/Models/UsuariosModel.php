@@ -1,4 +1,6 @@
 <?php
+
+
 class UsuariosModel extends Mysql {
 	private $intIdentificacion;
 	private $intIdUser;
@@ -41,20 +43,39 @@ class UsuariosModel extends Mysql {
 			$arrData = array($this->intId,$this->strTxtNombre,$this->strtxtApellidos,$this->intTxtTlf,$this->strTxtEmail,$this->intListStatus,$this->strImg,$this->intlistRolId,$this->strTxtPass);
 			$requestInsert = $this->insert($queryInsert,$arrData);
 			//almacenar errores
-			$pagina_error = $_SERVER['PHP_SELF']. addslashes($requestInsert);
-			$usuario = $_SESSION['userData']['user_id'];
+			// $pagina_error = $_SERVER['PHP_SELF']. addslashes($requestInsert);
+			// $usuario = $_SESSION['userData']['user_id'];
 
-			$sqlLog = "INSERT INTO table_log(log_idUser,log_descripcion,log_comando) VALUES(?,?,?)";
-			$arrDataLog = array($usuario,$pagina_error,$queryInsert);
-			$log = $this->insert($sqlLog,$arrDataLog);
-			// dep($requestInsert);
-			//die();
+			// $sqlLog = "INSERT INTO table_log(log_idUser,log_descripcion,log_comando) VALUES(?,?,?)";
+			// $arrDataLog = array($usuario,$pagina_error,$queryInsert);
+			// $log = $this->insert($sqlLog,$arrDataLog);
 			$return = $requestInsert;
 		}else{
 			//si no viene vacia es que ya existe un registro
 			$return = "exist";
 		}
 		return $return;
+	}
+	/**
+	 * crear el usuario al ingresar los datos
+	 * 
+	 */
+	public function createNick(int $intIdUser,int $intIdentificacion,string $strTxtEmail, string $strTxtNick,string $fileBase ){
+		$this->intIdUser = $intIdUser;
+		$this->strTxtEmail = $strTxtEmail;
+		$this->intIdentificacion = $intIdentificacion;
+		$this->strTxtNick = $strTxtNick;
+		$this->fileBase = $fileBase;
+		$sql = "SELECT * FROM table_user WHERE user_id = $this->intIdUser";
+		$request = $this->select_all($sql);
+		if(!empty($request)){
+			$sql = "UPDATE table_user SET  user_nick = ?, user_ruta = ? WHERE user_id = $this->intIdUser AND user_ci = $this->intIdentificacion";
+			$arrData = array($this->strTxtNick,$this->fileBase);
+			$request = $this->update($sql,$arrData);
+		}else{
+			$request = "error";
+		}
+		return $request;
 	}
 	/*********************
 	 * funcion de cargar usuario de la DB

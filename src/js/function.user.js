@@ -272,13 +272,6 @@ function fntEditUser(idUser) {
 				document.querySelector('#txtTlf').value = objData.data.user_tlf;
 				document.querySelector('#txtEmail').value = objData.data.user_email;
 				document.querySelector('#listRolId').value = objData.data.rol_id;
-				// document.querySelector('#idUsuario').readOnly = true; 
-				// document.querySelector('#txtIdentificacion').readOnly = true;
-				// document.querySelector('#txtNombres').readOnly = true;
-				// document.querySelector('#txtApellidos').readOnly = true;
-				// document.querySelector('#txtTlf').readOnly = true;
-				// document.querySelector('#txtEmail').readOnly = true;
-				//sirve para colocarle el dato al select
 				$('#listRolId').selectpicker('render');
 				//condicion para el status
 				if (objData.data.user_status == 1) {

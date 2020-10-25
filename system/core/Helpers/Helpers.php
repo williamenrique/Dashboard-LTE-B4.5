@@ -61,7 +61,7 @@ function formatear_timestamp($fecha){
 }
 
 function formatear_fecha($fecha){
-	$dia = date('w', strtotime($fecha));
+	$dia = date('N', strtotime($fecha));
 	$dias = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 	$mes = date("m", strtotime($fecha));
 	$ano = date("Y", strtotime($fecha));
