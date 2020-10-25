@@ -135,18 +135,77 @@
 		// }
 
 		/ var menu = document.querySelector('#listMenuAsignar');
-// menu.addEventListener('change',function(){
-// 	var selectedOption = this.options[menu.selectedIndex];
-// 	let ajaxUrl = base_url + "Menu/getSubs/" + selectedOption.value;
-// 	//creamos el objeto para os navegadores
-// 	var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-// 	//abrimos la conexion y enviamos los parametros para la peticion
-// 	request.open("GET", ajaxUrl, true);
-// 	request.send();
-// 	request.onreadystatechange = function () {
-// 		if (request.readyState == 4 && request.status == 200) {
-// 			//option obtenidos del controlador
-// 			document.querySelector('.listSubmenuAsignar').innerHTML = request.responseText;
-// 		}
-// 	}
-// });
+		// menu.addEventListener('change',function(){
+		// var selectedOption = this.options[menu.selectedIndex];
+		// let ajaxUrl = base_url + "Menu/getSubs/" + selectedOption.value;
+		// //creamos el objeto para os navegadores
+		// var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+		// //abrimos la conexion y enviamos los parametros para la peticion
+		// request.open("GET", ajaxUrl, true);
+		// request.send();
+		// request.onreadystatechange = function () {
+		// if (request.readyState == 4 && request.status == 200) {
+		// //option obtenidos del controlador
+		// document.querySelector('.listSubmenuAsignar').innerHTML = request.responseText;
+		// }
+		// }
+		// });
+
+
+
+
+		/*************
+		* acutalizar usuario
+		*/
+		public function updateUser(int $intIdUser,int $intIdentificacion,string $strTxtNombre,string $strtxtApellidos,int
+		$intTxtTlf,string $strTxtEmail, int $intListStatus, int $intlistRolId,string $strTxtPass){
+		$this->intIdentificacion = $intIdentificacion;
+		$this->intIdUser = $intIdUser;
+		$this->strTxtNombre = $strTxtNombre;
+		$this->strtxtApellidos = $strtxtApellidos;
+		$this->intTxtTlf = $intTxtTlf;
+		$this->strTxtEmail = $strTxtEmail;
+		$this->intListStatus = $intListStatus;
+		$this->intlistRolId = $intlistRolId;
+		$this->strTxtPass = $strTxtPass;
+		/***********
+		* //antes de actualizar hacemos una validacion
+		* consultando si el email existe
+		*/
+		$sql = "SELECT * FROM table_user WHERE (user_email = '{$this->strTxtEmail}' AND user_id != $this->intIdUser) OR
+		(user_ci = $this->intIdentificacion AND user_id != $this->intIdUser)";
+		$request = $this->select_all($sql);
+		//si no obtenemos registros procede actualizar
+		if(empty($request)){
+		if($this->strTxtPass != ""){
+		$sql = "UPDATE table_user SET user_ci = ?, user_pass = ?, user_nombres = ?, user_apellidos = ?, user_email = ?,
+		user_tlf = ?, user_rol = ?, user_status = ? WHERE user_id = $this->intIdUser";
+		$arrData = array(
+		$this->intIdentificacion,
+		$this->strTxtPass,
+		$this->strTxtNombre,
+		$this->strtxtApellidos,
+		$this->strTxtEmail,
+		$this->intTxtTlf,
+		$this->intlistRolId,
+		$this->intListStatus
+		);
+		}else{
+		$sql = "UPDATE table_user SET user_ci = ?, user_nombres = ?, user_apellidos = ?, user_email = ?, user_tlf = ?,
+		user_rol = ?, user_status = ? WHERE user_id = $this->intIdUser";
+		$arrData = array(
+		$this->intIdentificacion,
+		$this->strTxtNombre,
+		$this->strtxtApellidos,
+		$this->strTxtEmail,
+		$this->intTxtTlf,
+		$this->intlistRolId,
+		$this->intListStatus
+		);
+		}
+		$request = $this->update($sql,$arrData);
+		}else{
+		$request = 'exist';
+		}
+		return $request;
+		}

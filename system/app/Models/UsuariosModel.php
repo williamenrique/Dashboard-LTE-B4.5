@@ -57,7 +57,7 @@ class UsuariosModel extends Mysql {
 		return $return;
 	}
 	/**
-	 * crear el usuario al ingresar los datos
+	 * crear el usuario desde admin al ingresar un nuevo empleado
 	 * 
 	 */
 	public function createNick(int $intIdUser,int $intIdentificacion,string $strTxtEmail, string $strTxtNick,string $fileBase ){
@@ -156,57 +156,7 @@ class UsuariosModel extends Mysql {
 			$request = $this->update($sql,$arrData);
 		return $request;
 	}
-	/*************
-	 * acutalizar usuario
-	 */
-	public function updateUser(int $intIdUser,int $intIdentificacion,string $strTxtNombre,string $strtxtApellidos,int $intTxtTlf,string $strTxtEmail, int $intListStatus, int $intlistRolId,string $strTxtPass){
-		$this->intIdentificacion = $intIdentificacion;
-		$this->intIdUser = $intIdUser;
-		$this->strTxtNombre = $strTxtNombre;
-		$this->strtxtApellidos = $strtxtApellidos;
-		$this->intTxtTlf = $intTxtTlf;
-		$this->strTxtEmail = $strTxtEmail;
-		$this->intListStatus = $intListStatus;
-		$this->intlistRolId = $intlistRolId;
-		$this->strTxtPass = $strTxtPass;
-		/***********
-		 * //antes de actualizar hacemos una validacion
-		 * consultando si el email existe
-		 */
-		$sql = "SELECT * FROM table_user WHERE (user_email = '{$this->strTxtEmail}' AND user_id != $this->intIdUser) OR (user_ci = $this->intIdentificacion AND user_id != $this->intIdUser)";
-		$request = $this->select_all($sql);
-		//si no obtenemos registros procede actualizar
-		if(empty($request)){
-			if($this->strTxtPass != ""){
-				$sql = "UPDATE table_user SET user_ci = ?, user_pass = ?, user_nombres = ?, user_apellidos = ?, user_email = ?, user_tlf = ?, user_rol = ?, user_status = ? WHERE user_id = $this->intIdUser";
-				$arrData = array(
-					$this->intIdentificacion,
-					$this->strTxtPass,
-					$this->strTxtNombre,
-					$this->strtxtApellidos,
-					$this->strTxtEmail,
-					$this->intTxtTlf,
-					$this->intlistRolId,
-					$this->intListStatus
-				);
-			}else{
-				$sql = "UPDATE table_user SET user_ci = ?, user_nombres = ?, user_apellidos = ?, user_email = ?, user_tlf = ?, user_rol = ?, user_status = ? WHERE user_id = $this->intIdUser";
-				$arrData = array(
-					$this->intIdentificacion,
-					$this->strTxtNombre,
-					$this->strtxtApellidos,
-					$this->strTxtEmail,
-					$this->intTxtTlf,
-					$this->intlistRolId,
-					$this->intListStatus
-				);
-			}
-			$request = $this->update($sql,$arrData);
-		}else{
-			$request = 'exist';
-		}
-		return $request;
-	}
+	
 	/*****************
 	 * eliminar usuario
 	 */

@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			var strIdentificacion= document.querySelector('#registerCi').value;
 			var strTxtRegisterEmail = document.querySelector('#registerEmail').value;
 			var strTxtRegisterEmail = document.querySelector('#registerEmail').value;
-
 			var strTxtRegisterPassword = document.querySelector('#registerPassword').value;
 			var strTxtRegisterRepeatPassword = document.querySelector('#registerRepeatPassword').value;
 			//validamos campos no vacios
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				Swal.fire('Todos los campos deben ser llenados!', 'Oops...', 'error');
 				return false;
 			}
-
 			if (strTxtRegisterPassword != '' || strTxtRegisterRepeatPassword != '') {
 				if (strTxtRegisterPassword.length < 1) {
 					$(function () {
