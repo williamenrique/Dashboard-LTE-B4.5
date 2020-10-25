@@ -45,7 +45,7 @@ class UsuariosModel extends Mysql {
 			//almacenar errores
 			// $pagina_error = $_SERVER['PHP_SELF']. addslashes($requestInsert);
 			// $usuario = $_SESSION['userData']['user_id'];
-
+			
 			// $sqlLog = "INSERT INTO table_log(log_idUser,log_descripcion,log_comando) VALUES(?,?,?)";
 			// $arrDataLog = array($usuario,$pagina_error,$queryInsert);
 			// $log = $this->insert($sqlLog,$arrDataLog);
@@ -60,11 +60,12 @@ class UsuariosModel extends Mysql {
 	 * crear el usuario desde admin al ingresar un nuevo empleado
 	 * 
 	 */
-	public function createNick(int $intIdUser,int $intIdentificacion,string $strTxtEmail, string $strTxtNick,string $fileBase ){
+	public function createNick(int $intIdUser,int $intIdentificacion,string $strTxtEmail, string $strTxtNick,int $intlistRolId,string $fileBase ){
 		$this->intIdUser = $intIdUser;
 		$this->strTxtEmail = $strTxtEmail;
 		$this->intIdentificacion = $intIdentificacion;
 		$this->strTxtNick = $strTxtNick;
+		$this->intlistRolId = $intlistRolId;
 		$this->fileBase = $fileBase;
 		$sql = "SELECT * FROM table_user WHERE user_id = $this->intIdUser";
 		$request = $this->select_all($sql);
@@ -72,6 +73,9 @@ class UsuariosModel extends Mysql {
 			$sql = "UPDATE table_user SET  user_nick = ?, user_ruta = ? WHERE user_id = $this->intIdUser AND user_ci = $this->intIdentificacion";
 			$arrData = array($this->strTxtNick,$this->fileBase);
 			$request = $this->update($sql,$arrData);
+			$insertRol = "INSERT INTO table_user_rol(user_nick,id_rol) VALUES(?,?)";
+			$arrDataRol = array($this->strTxtNick,$this->intlistRolId);
+			$Rol = $this->insert($insertRol,$arrDataRol);
 		}else{
 			$request = "error";
 		}
@@ -197,6 +201,16 @@ class UsuariosModel extends Mysql {
 	public function selectUsersHigh(){
 		@session_start();
 		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status,r.rol_name FROM table_user p INNER JOIN table_roles r ON p.user_rol = r.rol_id WHERE p.user_status = 0 ";
+		$request = $this->select_all($sql);
+		return $request;
+	}
+	
+	/***
+	 * obtener usuarios pendientes
+	 */
+	public function selectUsersPend(){
+		@session_start();
+		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status FROM table_user p WHERE p.user_status = 2";
 		$request = $this->select_all($sql);
 		return $request;
 	}

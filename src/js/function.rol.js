@@ -160,7 +160,7 @@ function fntEditRol(idRol) {
 															<label class="form-check-label" for="status2">Inactivo</label>
 														</div>
 														<div class="form-check ml-2">
-															<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2" checked>
+															<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="1" checked>
 															<label class="form-check-label" for="status1">Activo</label>
 														</div>
 													</div>
@@ -171,7 +171,7 @@ function fntEditRol(idRol) {
 														<label class="form-check-label" for="status2">Inactivo</label>
 														</div>
 														<div class="form-check ml-2">
-														<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="2">
+														<input class="form-check-input" type="radio" name="radioStatus" id="status1" value="1">
 														<label class="form-check-label" for="status1">Activo</label>
 														</div>
 													</div>

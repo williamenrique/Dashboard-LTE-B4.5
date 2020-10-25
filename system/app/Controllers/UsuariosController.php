@@ -61,7 +61,7 @@ class Usuarios extends Controllers{
 						// creo carpeta en servidor si no existe
 						if (!file_exists($fileBase))
 						mkdir($fileBase, 0777, true);
-						$createNick= $this->model->createNick($requestUser, $intIdentificacion,$strTxtEmail, $userNIck,$fileBase);
+						$createNick= $this->model->createNick($requestUser, $intIdentificacion,$strTxtEmail, $userNIck,$intlistRolId,$fileBase);
 					}else{
 						$arrResponse = array("status" => true, "msg" => "Cambio de rol exitoso");
 					}
@@ -80,7 +80,6 @@ class Usuarios extends Controllers{
 	 *************************/
 	public function getUsers(){
 		$arrData = $this->model->selectUsers();
-
 		for ($i=0; $i < count($arrData) ; $i++) {
 			$arrData[$i]['rol_name'] = '<a style="font-size: 15px; cursor:pointer" onclick="fntEditUser('.$arrData[$i]['user_id'].')">'.$arrData[$i]['rol_name'].'</a>';
 			if ($arrData[$i]['user_status'] == 1) {
@@ -270,6 +269,35 @@ class Usuarios extends Controllers{
 				$arrData[$i]['user_status'] = '<a style="font-size: 15px; cursor:pointer" class="badge badge-secondary" onClick="fntStatus(1,'.$arrData[$i]['user_id'].')">Dado de baja</a>';
 			}
 		}
+		echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+		die();
+	}
+
+			/************
+	 * para cargar los usuarios de alta
+	 */
+	public function pendiente(){
+		$data['page_title'] = "Dashboard - Usuarios pendientes";
+		$data['page_tag'] = "Usuarios pendientes";
+		$data['page_name'] = "pendiente";
+		$data['page_menu_open'] = "usuario";//abrir el menu
+		$data['page_link'] = "usuarios";//activar el menu
+		$data['page_link_acitvo'] = "link-pendiente";//link activo submenu
+		$data['page_functions'] = "function.user.js";
+		$this->views->getViews($this, "pendiente", $data);
+	}
+
+	public function getUserPend(){
+		$arrData = $this->model->selectUsersPend();
+		for ($i=0; $i < count($arrData) ; $i++) {
+			$arrData[$i]['rol_name'] = '<a style="font-size: 15px; cursor:pointer" onclick="fntEditUser('.$arrData[$i]['user_id'].')">No posee rol</a>';
+			if ($arrData[$i]['user_status'] == 1) {
+				$arrData[$i]['user_status'] = '<a style="font-size: 15px; cursor:pointer" class="badge badge-info" onClick="fntStatus(2,'.$arrData[$i]['user_id'].')">Activo</a>';
+			}else{
+				$arrData[$i]['user_status'] = '<a style="font-size: 15px; cursor:pointer" class="badge badge-warning" onClick="fntStatus(1,'.$arrData[$i]['user_id'].')">Inactivo</a>';
+			}
+		}
+		//convertir el arreglo de datos en un formato json
 		echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
 		die();
 	}
