@@ -123,60 +123,60 @@ document.addEventListener('DOMContentLoaded', function () {
 	 * cargamos la tabla de los usuarios pendientes
 	 */
 	if (boxUserPend) { 
-		tableUserPend = $('#tableUserPend').DataTable({
-				"language": {
-				"sProcessing": "Procesando...",
-				"sLengthMenu": "Mostrar _MENU_ registros",
-				"sZeroRecords": "No se encontraron resultados",
-				"sEmptyTable": "Ningún dato disponible",
-				"sInfo": "Total de _TOTAL_ Registros",
-				"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-				"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-				"sInfoPostFix": "",
-				"sSearch": "Buscar:",
-				"sUrl": "",
-				"sInfoThousands": ",",
-				"sLoadingRecords": "Cargando...",
-				"oPaginate": {
-					"sFirst": "Primero",
-					"sLast": "Último",
-					"sNext": "Siguiente",
-					"sPrevious": "Anterior"
-				},
-				"oAria": {
-					"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				},
-				"buttons": {
-					"copy": "Copiar",
-					"colvis": "Visibilidad"
-				}
-			},
-			"responsive": {
-				"name": "medium",
-				"width": "1188"
-			},
-			"ajax": {
-				"url": ' ' + base_url + 'Usuarios/getUserPend',
-				"dataSrc": ''
-			},
-			"columns": [
-				{ 'data': 'user_id' },
-				{ 'data': 'user_nick' },
-				{ 'data': 'user_nombres' },
-				{ 'data': 'user_apellidos' },
-				{ 'data': 'user_email' },
-				{ 'data': 'user_tlf' },
-				{ 'data': 'rol_name' },
-				{ 'data': 'user_status' }
-			],
-			"resonsieve": "true",
-			"bDestroy": true,
-			"iDisplayLength": 10,
-			"order": [[0, "asc"]]
-		});
+		// tableUserPend = $('#tableUserPend').DataTable({
+		// 		"language": {
+		// 		"sProcessing": "Procesando...",
+		// 		"sLengthMenu": "Mostrar _MENU_ registros",
+		// 		"sZeroRecords": "No se encontraron resultados",
+		// 		"sEmptyTable": "Ningún dato disponible",
+		// 		"sInfo": "Total de _TOTAL_ Registros",
+		// 		"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+		// 		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		// 		"sInfoPostFix": "",
+		// 		"sSearch": "Buscar:",
+		// 		"sUrl": "",
+		// 		"sInfoThousands": ",",
+		// 		"sLoadingRecords": "Cargando...",
+		// 		"oPaginate": {
+		// 			"sFirst": "Primero",
+		// 			"sLast": "Último",
+		// 			"sNext": "Siguiente",
+		// 			"sPrevious": "Anterior"
+		// 		},
+		// 		"oAria": {
+		// 			"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+		// 			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		// 		},
+		// 		"buttons": {
+		// 			"copy": "Copiar",
+		// 			"colvis": "Visibilidad"
+		// 		}
+		// 	},
+		// 	"responsive": {
+		// 		"name": "medium",
+		// 		"width": "1188"
+		// 	},
+		// 	"ajax": {
+		// 		"url": ' ' + base_url + 'Usuarios/getUserPend',
+		// 		"dataSrc": ''
+		// 	},
+		// 	"columns": [
+		// 		{ 'data': 'user_id' },
+		// 		{ 'data': 'user_nick' },
+		// 		{ 'data': 'user_nombres' },
+		// 		{ 'data': 'user_apellidos' },
+		// 		{ 'data': 'user_email' },
+		// 		{ 'data': 'user_tlf' },
+		// 		{ 'data': 'rol_name' },
+		// 		{ 'data': 'user_status' }
+		// 	],
+		// 	"resonsieve": "true",
+		// 	"bDestroy": true,
+		// 	"iDisplayLength": 10,
+		// 	"order": [[0, "asc"]]
+		// });
 	}
-	$('#tableUserPend').DataTable();
+	// $('#tableUserPend').DataTable();
 	/*****************
 	 * hacemos el envio del formulario para crear usuario
 	 * primeramente validamos si existe el  formulario ya que se esta usando el mismo
@@ -648,3 +648,23 @@ if (document.querySelector('#formPass')) {
 /****
  * cargar tabla de usuarios pendientes
  */
+
+if (document.querySelector('.box_user_pend')) {
+	var box_user_pend = document.querySelector('.box_user_pend');
+	let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	let ajaxUrl = base_url + 'Usuarios/getUserPend';
+	//creamos un objeto del formulario con los Pass haciendo referencia a formData
+	let formData = new FormData(formPass );
+	//prepara los datos por ajax preparando el dom
+	request.open('POST', ajaxUrl, true);
+	//envio de datos del formulario que se almacena enla variable
+	request.send(formData);
+	//obtenemos los resultados y evaluamos
+	request.onreadystatechange = function () {
+		if (request.readyState == 4 && request.status == 200) {
+			//obtenemos los datos y convertimos en JSON
+			//let objData = JSON.parse(request.responseText);
+			box_user_pend.innerHTML = request.responseText;
+		}
+	}
+}

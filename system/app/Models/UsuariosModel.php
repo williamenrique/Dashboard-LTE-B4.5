@@ -1,6 +1,4 @@
 <?php
-
-
 class UsuariosModel extends Mysql {
 	private $intIdentificacion;
 	private $intIdUser;
@@ -210,7 +208,12 @@ class UsuariosModel extends Mysql {
 	 */
 	public function selectUsersPend(){
 		@session_start();
-		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status FROM table_user p WHERE p.user_status = 2";
+		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status FROM table_user p WHERE p.user_status = 3";
+		$request = $this->select_all($sql);
+		return $request;
+	}
+	public function getRoles(){
+		$sql ="SELECT * FROM table_roles WHERE rol_status = 1";
 		$request = $this->select_all($sql);
 		return $request;
 	}

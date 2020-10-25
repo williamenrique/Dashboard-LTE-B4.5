@@ -24,7 +24,6 @@ getModal('modalUsuario',$data);
 	<!-- /.content-header -->
 	<!-- Main content -->
 	<section class="content">
-
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
@@ -33,30 +32,15 @@ getModal('modalUsuario',$data);
 						<div class="card-header">
 							<h5 class="text-muted">Lista de usuarios de alta en el sistema</h5>
 						</div>
-
-						<div class="card-body box_user_pend">
-							<table id="tableUserPend" class="data-table table stripe hover nowrap" style="width:100%">
-								<thead>
-									<tr>
-										<th scope="col">ID</th>
-										<th scope="col">Nick</th>
-										<th scope="col">Nombres</th>
-										<th scope="col">Apellidos</th>
-										<th scope="col">Email</th>
-										<th scope="col">Telefono</th>
-										<th scope="col">Rol</th>
-										<th scope="col">Statuffffs</th>
-									</tr>
-								</thead>
-								<tbody>
-
-								</tbody>
-							</table>
-						</div>
-						<!-- /.card -->
 					</div>
 				</div>
 			</div>
+
+			<div class=" row box_user_pend">
+
+			</div>
+		</div>
 	</section>
+
 	<!-- /.content -->
 	<?php footer_admin($data)?>

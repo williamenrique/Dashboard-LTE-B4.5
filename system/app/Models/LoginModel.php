@@ -42,8 +42,8 @@ class LoginModel extends Mysql {
 		$this->strTxtNombre = $strTxtNombre;
 		$this->strTxtPass = $strTxtPass;
 		$this->strTxtEmail = $strTxtEmail;
-		$this->intListStatus = 2;
-		$this->intlistRolId = 7;
+		$this->intListStatus = 3;
+		$this->intlistRolId = 0;
 		$this->strImg = "default.png";
 		
 	//consultar si existe
