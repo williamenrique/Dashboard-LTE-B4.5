@@ -290,81 +290,52 @@ class Usuarios extends Controllers{
 	public function getUserPend(){
 		$arrData = $this->model->selectUsersPend();
 		$htmlOptions = "";
-		$getRoles = $this->model->getRoles();
-		$roles ="";
-		foreach ($getRoles as $value){
-			$roles .= '
-									<div class="custom-control custom-radio">
-										<input class="custom-control-input" name="radioRol" type="radio" id="'.$value["rol_name"].'" value="'.$value["rol_id"].'">
-										<label for="'.$value["rol_name"].'" class="custom-control-label">'.$value["rol_name"].'</label>
-									</div>';
-		}
-		foreach ($arrData as $key) {
-			$htmlOptions .= '
-											<div class="col-lg-3 col-6">
-												<div class="small-box bg-info">
-													<div class="inner">
-														<h6>'.$key['user_nombres'].' <strong>'.$key['user_nick'].'</strong></h6>
-														<ul>
-															<li>Estado <span class="badge badge-warning">Pendiente</span></li>
-															<li>Cargo <span class="badge badge-danger">No posee</span></li>
-														</ul>
-														<span>Seleccione cargo</span>
-														<div class="form-group">
-															'.$roles.'
+		if(!empty($arrData)){
+			foreach ($arrData as $key) {
+				$htmlOptions .= '
+												<div class="col-lg-3 col-6">
+													<form id="formActivar">
+													<input type="hidden" name="idUser" value="'.$key['user_id'].'">
+														<div class="small-box bg-info">
+															<div class="inner">
+																<h6>'.$key['user_nombres'].' <strong>'.$key['user_nick'].'</strong></h6>
+																<ul>
+																	<li>Estado <span class="badge badge-warning">Pendiente</span></li>
+																	<li>Cargo <span class="badge badge-danger">No posee</span></li>
+																</ul>
+																
+															</div>
+															<span class="ml-2" style="font-size: 10px">'.formatear_fecha($key['user_registro']).'</span>
+															<div class="icon">
+																<i class="ion ion-bag"></i>
+															</div>
+															<a href="#" class="small-box-footer" onclick="fntActivarUser('.$key['user_id'].')">Activar<i class="fas fa-arrow-circle-right ml-2"></i></a>
 														</div>
-													</div>
-													<span class="ml-2" style="font-size: 10px">'.formatear_fecha($key['user_registro']).'</span>
-													<div class="icon">
-														<i class="ion ion-bag"></i>
-													</div>
-													<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-												</div>
-											</div>';
+	
+													</form>
+													
+												</div>';
+			}
+		}else{
+			$htmlOptions .='<div>no hay usuarios pendientes</div>';
+
 		}
 		echo $htmlOptions;
 		die();
 	}
-}
-
-
-/*
-$arrData[$i]['rol_name'] = '<a style="font-size: 15px; cursor:pointer" onclick="fntEditUser('.$arrData[$i]['user_id'].')">No posee rol</a>';
-			if ($arrData[$i]['user_status'] == 1) {
-				$arrData[$i]['user_status'] = '<a style="font-size: 15px; cursor:pointer" class="badge badge-info" onClick="fntStatus(2,'.$arrData[$i]['user_id'].')">Activo</a>';
+	public function activarUser(){
+		if($_POST){
+			$idUser = intval($_POST['idUser']);
+			if(!empty($idUser)){
+				$request = $this->model->statusUser($idUser,1);
+				if($request == 1){
+					$arrResponse = array("status" => true, "msg" => "Usuario activado");
+				}
 			}else{
-				$arrData[$i]['user_status'] = '<a style="font-size: 15px; cursor:pointer" class="badge badge-warning" onClick="fntStatus(1,'.$arrData[$i]['user_id'].')">Inactivo</a>';
+				$arrResponse = array("status" => false, "msg" => "A ocurrido un error");
 			}
-
-
-
-for ($i=0; $i < count($arrData) ; $i++) {
-			$htmlOptions .= '
-											<div class="col-lg-3 col-6">
-												<div class="small-box bg-info">
-													<div class="inner">
-														<h6>'.$arrData[$i]['user_nombres'].' <strong>'.$arrData[$i]['user_nick'].'</strong></h6>
-														<ul>
-															<li>Estado <span class="badge badge-warning">Pendiente</span></li>
-															<li>Cargo <span class="badge badge-danger">No posee</span></li>
-															<span>Seleccione cargo</span>
-															<ul>';
-														for ($j=0; $j < count($getRoles); $j++) { 
-															$htmlOptions .=	$getRoles[$j]['rol_name'];
-														}
-															'</ul>
-														</ul>
-													</div>
-													<span class="ml-2" style="font-size: 10px">'.formatear_fecha($arrData[$i]['user_registro']).'</span>
-													<div class="icon">
-														<i class="ion ion-bag"></i>
-													</div>
-													<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-												</div>
-											</div>';
-			}
-
-
-
-
-			*/
+			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+		}
+		die();
+	}
+}

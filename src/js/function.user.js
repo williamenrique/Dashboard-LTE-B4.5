@@ -668,3 +668,28 @@ if (document.querySelector('.box_user_pend')) {
 		}
 	}
 }
+
+function fntActivarUser(idUser) {
+	var formActivar = document.querySelector('#formActivar');
+	let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	let ajaxUrl = base_url + 'Usuarios/activarUser';
+	//creamos un objeto del formulario con los Pass haciendo referencia a formData
+	let formData = new FormData(formActivar );
+	//prepara los datos por ajax preparando el dom
+	request.open('POST', ajaxUrl, true);
+	//envio de datos del formulario que se almacena enla variable
+	request.send(formData);
+	//obtenemos los resultados y evaluamos
+	request.onreadystatechange = function () {
+		if (request.readyState == 4 && request.status == 200) {
+			//obtenemos los datos y convertimos en JSON
+			let objData = JSON.parse(request.responseText);
+			// evaluamos el resultado
+			if (objData.status) {
+				notifi(objData.msg, 'success');
+			} else {
+				notifi(objData.msg, 'error');
+			}
+		}
+	}
+}
