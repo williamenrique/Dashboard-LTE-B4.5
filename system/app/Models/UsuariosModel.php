@@ -215,7 +215,13 @@ class UsuariosModel extends Mysql {
 	 * obtener usuarios pendientes
 	 */
 	public function selectUsersPend(){
-		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status ,p.user_rol FROM table_user p WHERE p.user_status = 3";
+		// $sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status ,p.user_rol FROM table_user p WHERE p.user_status = 3";
+		$sql = "SELECT a.user_id,a.user_nombres,a.user_nick,a.user_registro,b.id_rol,c.rol_name
+						FROM table_user a JOIN table_user_rol b
+						JOIN table_roles c
+						WHERE a.user_nick = b.user_nick AND
+						b.id_rol = c.rol_id AND
+						a.user_status = 3";
 		$request = $this->select_all($sql);
 		return $request;
 	}
