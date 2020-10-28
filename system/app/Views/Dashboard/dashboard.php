@@ -1,5 +1,4 @@
 <?php header_admin($data)?>
-
 <!-- page content -->
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -20,7 +19,6 @@
 	<!-- /.content-header -->
 	<!-- Main content -->
 	<section class="content">
-
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-3 col-6">
@@ -99,10 +97,10 @@
 							</ul>
 							<div class="tab-content" id="pills-tabContent">
 								<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-									<?php  	
+									<?php
 								$time = time();
 
-								echo date("h:i:s");
+								echo date("g:i:s");
 							dep($_SESSION['userData']);?>
 								</div>
 								<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...

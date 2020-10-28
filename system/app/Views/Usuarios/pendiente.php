@@ -31,6 +31,15 @@ getModal('modalUsuario',$data);
 					<div class="card">
 						<div class="card-header">
 							<h5 class="text-muted">Lista de usuarios de alta en el sistema</h5>
+							<div class="row">
+								<div class="col-sm-6 colRol">
+									<form id="formRolAsignar">
+										<input type="text" name="txtIdUser" id="txtIdUser" value="">
+										<div class="form-group getRoles">
+
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	$('#tableUser').DataTable();
-	
+
 	/*************
 	 * cargamos la tabla de los usuarios dados de alta
 	 */
-	if (boxUserHigh) { 
+	if (boxUserHigh) {
 		tableUserHigh = $('#tableUserHigh').DataTable({
 				"language": {
 				"sProcessing": "Procesando...",
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		/*************
 	 * cargamos la tabla de los usuarios pendientes
 	 */
-	if (boxUserPend) { 
+	if (boxUserPend) {
 		// tableUserPend = $('#tableUserPend').DataTable({
 		// 		"language": {
 		// 		"sProcessing": "Procesando...",
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			var strTxtEmail = document.querySelector('#txtEmail').value;
 			var strListStatus = document.querySelector('#listStatus').value;
 			var intlistRolId = document.querySelector('#listRolId').value;
-			/************************************************* 
+			/*************************************************
 			* creamos el objeto de envio para tipo de navegador
 			* hacer una validacion para diferentes navegadores y crear el formato de lectura
 			* y hacemos la peticion mediante ajax
@@ -234,12 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 window.addEventListener('load', function () {
 	fntRolesUsuarios();
-	/********
-	 * se cargaran las funciones directo en el controlador para evitar errores al paginado
-	 fntEditUser();
-	 fntViewUser();
-	 fntDelUser();
-	 */
+	fntUserPend();
 },false)
 /*************************
  * funcion para obtener los roles de usuarios
@@ -261,7 +256,7 @@ function fntRolesUsuarios() {
 				$("#listRolId").selectpicker('render');
 			}
 		}
-		
+
 	}
 }
 /****************
@@ -276,7 +271,7 @@ function fntViewUser(idUser) {
 	request.open("GET", ajaxUrl, true);
 	request.send();
 	request.onreadystatechange = function () {
-		//todo va bien 
+		//todo va bien
 		if (request.readyState == 4 && request.status == 200) {
 			//creamos el objeto de los datos obtenidos del controlador
 			var objData = JSON.parse(request.responseText);
@@ -503,11 +498,11 @@ function compararPass() {
 	var strPassC = document.querySelector('#textPassConfirm').value;
 }
 //actualizar datos
-if (document.querySelector('#formDatos')) { 
+if (document.querySelector('#formDatos')) {
 	var	formDatos = document.querySelector('#formDatos');
 	formDatos.onsubmit = function (e) {
 		e.preventDefault();
-		/************************************************* 
+		/*************************************************
 		* creamos el objeto de envio para tipo de navegador
 		* hacer una validacion para diferentes navegadores y crear el formato de lectura
 		* y hacemos la peticion mediante ajax
@@ -554,11 +549,11 @@ if (document.querySelector('#formDatos')) {
 	}
 }
 //crear usuario
-if (document.querySelector('#formNick')) { 
+if (document.querySelector('#formNick')) {
 	var	formNick = document.querySelector('#formNick');
 	formNick.onsubmit = function (e) {
 		e.preventDefault();
-		/************************************************* 
+		/*************************************************
 		* creamos el objeto de envio para tipo de navegador
 		* hacer una validacion para diferentes navegadores y crear el formato de lectura
 		* y hacemos la peticion mediante ajax
@@ -604,11 +599,11 @@ if (document.querySelector('#formNick')) {
 	}
 }
 //cambiar password
-if (document.querySelector('#formPass')) { 
+if (document.querySelector('#formPass')) {
 	var	formPass = document.querySelector('#formPass');
 	formPass.onsubmit = function (e) {
 		e.preventDefault();
-		/************************************************* 
+		/*************************************************
 		* creamos el objeto de envio para tipo de navegador
 		* hacer una validacion para diferentes navegadores y crear el formato de lectura
 		* y hacemos la peticion mediante ajax
@@ -646,30 +641,95 @@ if (document.querySelector('#formPass')) {
 }
 
 /****
- * cargar tabla de usuarios pendientes
+ * cargar de usuarios pendientes
  */
 
-if (document.querySelector('.box_user_pend')) {
-	var box_user_pend = document.querySelector('.box_user_pend');
+function fntUserPend(){
+	if (document.querySelector('.box_user_pend')) {
+		var box_user_pend = document.querySelector('.box_user_pend');
+		let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+		let ajaxUrl = base_url + 'Usuarios/getUserPend';
+		//creamos un objeto del formulario con los Pass haciendo referencia a formData
+		let formData = new FormData(formPass );
+		//prepara los datos por ajax preparando el dom
+		request.open('POST', ajaxUrl, true);
+		//envio de datos del formulario que se almacena enla variable
+		request.send(formData);
+		//obtenemos los resultados y evaluamos
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && request.status == 200) {
+				//obtenemos los datos y convertimos en JSON
+				//let objData = JSON.parse(request.responseText);
+				box_user_pend.innerHTML = request.responseText;
+			}
+		}
+	}
+}
+/****
+ * cargar los roles y el nick del usuario para asociarlo
+ */
+function cargarRol(idUser) {
+	var colRol = document.querySelector(".colRol");
+	var getRoles = document.querySelector(".getRoles");
+	var txtIdUser = document.querySelector("#txtIdUser").value = idUser;
+	colRol.style.display = "block";
 	let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-	let ajaxUrl = base_url + 'Usuarios/getUserPend';
-	//creamos un objeto del formulario con los Pass haciendo referencia a formData
-	let formData = new FormData(formPass );
+	let ajaxUrl = base_url + 'Usuarios/getRoles';
 	//prepara los datos por ajax preparando el dom
 	request.open('POST', ajaxUrl, true);
 	//envio de datos del formulario que se almacena enla variable
-	request.send(formData);
+	request.send();
 	//obtenemos los resultados y evaluamos
 	request.onreadystatechange = function () {
 		if (request.readyState == 4 && request.status == 200) {
 			//obtenemos los datos y convertimos en JSON
-			//let objData = JSON.parse(request.responseText);
-			box_user_pend.innerHTML = request.responseText;
+			getRoles.innerHTML= request.responseText;
+		}
+	}
+}
+if (document.querySelector('#formRolAsignar')) {
+	var formRolAsignar = document.querySelector('#formRolAsignar');
+	//agregar el evento al boton del formulario
+	formRolAsignar.onsubmit = function (e) {
+		e.preventDefault();
+		var txtIdUser = document.querySelector("#txtIdUser").value;
+		/*************************************************
+		* creamos el objeto de envio para tipo de navegador
+		* hacer una validacion para diferentes navegadores y crear el formato de lectura
+		* y hacemos la peticion mediante ajax
+		* usando un if reducido creamos un objeto del contenido en(request)
+		*****************************************************/
+		let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+		let ajaxUrl = base_url + 'Usuarios/asignarRol';
+		//creamos un objeto del formulario con los datos haciendo referencia a formData
+		let formData = new FormData(formRolAsignar );
+		//prepara los datos por ajax preparando el dom
+		request.open('POST', ajaxUrl, true);
+		//envio de datos del formulario que se almacena enla variable
+		request.send(formData);
+		//obtenemos los resultados
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && request.status == 200) {
+				//obtenemos los datos y convertimos en JSON
+				let objData = JSON.parse(request.responseText);
+				//leemos el ststus de la respuesta
+				if (objData.status) {
+					notifi(objData.msg, 'success');
+					document.querySelector(".colRol").style.display = "none";
+					formRolAsignar.reset();
+					fntUserPend();
+				} else {
+					notifi(objData.msg, 'error');
+				}
+			}
 		}
 	}
 }
 
+
+
 function fntActivarUser(idUser) {
+	var box= document.querySelector('.box_user_pend');
 	var formActivar = document.querySelector('#formActivar');
 	let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 	let ajaxUrl = base_url + 'Usuarios/activarUser';
@@ -687,6 +747,7 @@ function fntActivarUser(idUser) {
 			// evaluamos el resultado
 			if (objData.status) {
 				notifi(objData.msg, 'success');
+				fntUserPend();
 			} else {
 				notifi(objData.msg, 'error');
 			}

@@ -15,6 +15,7 @@ class UsuariosModel extends Mysql {
 	private $intOption;
 	private $intStatus;
 	private $fileBase;
+	private $intRol;
 	public function __construct(){
 		parent::__construct();
 	}
@@ -43,7 +44,7 @@ class UsuariosModel extends Mysql {
 			//almacenar errores
 			// $pagina_error = $_SERVER['PHP_SELF']. addslashes($requestInsert);
 			// $usuario = $_SESSION['userData']['user_id'];
-			
+
 			// $sqlLog = "INSERT INTO table_log(log_idUser,log_descripcion,log_comando) VALUES(?,?,?)";
 			// $arrDataLog = array($usuario,$pagina_error,$queryInsert);
 			// $log = $this->insert($sqlLog,$arrDataLog);
@@ -56,7 +57,7 @@ class UsuariosModel extends Mysql {
 	}
 	/**
 	 * crear el usuario desde admin al ingresar un nuevo empleado
-	 * 
+	 *
 	 */
 	public function createNick(int $intIdUser,int $intIdentificacion,string $strTxtEmail, string $strTxtNick,int $intlistRolId,string $fileBase ){
 		$this->intIdUser = $intIdUser;
@@ -84,7 +85,14 @@ class UsuariosModel extends Mysql {
 	 *********************/
 	public function selectUsers(){
 		@session_start();
-		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email, p.user_status,r.rol_name FROM table_user p INNER JOIN table_roles r ON p.user_rol = r.rol_id WHERE p.user_status != 0 AND user_id != {$_SESSION['userData']['user_id']}";
+		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email, p.user_status,rol.rol_id,rol.rol_name
+					FROM table_user p
+					JOIN table_user_rol r
+					JOIN table_roles rol
+					WHERE
+					p.user_nick = r.user_nick AND
+					r.id_rol = rol.rol_id AND
+					p.user_status != 0 AND p.user_id != {$_SESSION['userData']['user_id']}";
 		$request = $this->select_all($sql);
 		return $request;
 	}
@@ -144,7 +152,7 @@ class UsuariosModel extends Mysql {
 				//comprovar que el usuario no exista
 			  $sqlNick = "SELECT user_nick FROM table_user WHERE user_nick = '{$this->strTxtNick}'";
 				$requestNick = $this->select_all($sqlNick);
-	
+
 				if(empty($requestNick)){
 					$sql = "UPDATE table_user SET  user_nick = ? WHERE user_id = $this->intIdUser AND user_ci = $this->intIdentificacion";
 					$arrData = array($this->strTxtNick);
@@ -158,7 +166,7 @@ class UsuariosModel extends Mysql {
 			$request = $this->update($sql,$arrData);
 		return $request;
 	}
-	
+
 	/*****************
 	 * eliminar usuario
 	 */
@@ -202,13 +210,59 @@ class UsuariosModel extends Mysql {
 		$request = $this->select_all($sql);
 		return $request;
 	}
-	
+
 	/***
 	 * obtener usuarios pendientes
 	 */
 	public function selectUsersPend(){
-		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status FROM table_user p WHERE p.user_status = 3";
+		$sql = "SELECT p.user_id, p.user_nick,p.user_nombres,p.user_apellidos,p.user_tlf,p.user_email,p.user_registro, p.user_status ,p.user_rol FROM table_user p WHERE p.user_status = 3";
 		$request = $this->select_all($sql);
+		return $request;
+	}
+
+	public function selectRoles(){
+		$sql = "SELECT * FROM table_roles WHERE rol_status = 1";
+		$request = $this->select_all($sql);
+		return $request;
+	}
+	public function activarUser(int $idUser){
+		$this->idUser = $idUser;
+		$sql = "SELECT  p.user_id, p.user_nick,p.user_nombres,
+								p.user_apellidos,p.user_tlf,
+								p.user_email,p.user_registro,
+										p.user_status ,r.user_nick, r.id_rol
+						FROM table_user p JOIN table_user_rol r
+						WHERE p.user_nick = r.user_nick AND p.user_id = $this->idUser";
+		$request = $this->select($sql);
+		return $request;
+	}
+
+	public function asignarRol(int $intIdUser,int $intRol){
+		$this->intRol = $intRol;
+		$sql = "SELECT user_nick FROM table_user WHERE user_id = $intIdUser";
+		$resp = $this->select($sql);
+		if(!empty($resp)){
+			$this->strTxtNick =$resp['user_nick'];
+			$insertRol = "UPDATE table_user_rol SET id_rol = ? WHERE user_nick = '{$this->strTxtNick}'";
+			$arrDataRol = array($this->intRol);
+			$request = $this->update($insertRol,$arrDataRol);
+		}else{
+			$request ="error";
+		}
+		return $request;
+	}
+	//crear la relacion user y rol al crearlo y se ingresa en 0 para despues asignarle
+	public function setUserRol(int $intIdUser,int $intRol){
+		$this->intRol = $intRol;
+		$sql = "SELECT user_nick FROM table_user WHERE user_id = $intIdUser";
+		$resp = $this->select($sql);
+		if(!empty($resp)){
+			$insertRol = "INSERT INTO table_user_rol(user_nick,id_rol) VALUES(?,?)";
+			$arrDataRol = array($resp['user_nick'],$this->intRol);
+			$request = $this->insert($insertRol,$arrDataRol);
+		}else{
+			$request ="error";
+		}
 		return $request;
 	}
 }

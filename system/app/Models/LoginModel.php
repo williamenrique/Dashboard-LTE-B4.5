@@ -21,8 +21,8 @@ class LoginModel extends Mysql {
 		parent::__construct();
 	}
 	public function loginUser(string $txtUser, string $txtPass){
-		$this->strTxtUser = $txtUser;	
-		$this->strTxtPass = $txtPass;	
+		$this->strTxtUser = $txtUser;
+		$this->strTxtPass = $txtPass;
 	//	$sql = "SELECT user_id,user_status, user_nick, user_pass, user_email FROM table_user WHERE user_email = '$this->strTxtUser' AND  user_pass = '$this->strTxtPass' AND user_status != 0";
 		$sql = "SELECT * FROM table_user WHERE (user_email = '$this->strTxtUser' OR user_nick = '$this->strTxtUser') AND  user_pass = '$this->strTxtPass' AND user_status != 0";
 		$request = $this->select($sql);
@@ -33,7 +33,7 @@ class LoginModel extends Mysql {
 		$this->intIdUser = $intIdUser;
 		$sql = "SELECT  p.user_ci,p.user_nick, p.user_id,p.user_nombres,p.user_pass,p.user_apellidos,p.user_tlf,p.user_email, p.user_status,r.rol_id,r.rol_name FROM table_user p INNER JOIN table_roles r ON p.user_rol = r.rol_id WHERE p.user_id = $this->intIdUser";
 		$request = $this->select($sql);
-		$_SESSION['userData'] = $request; 
+		$_SESSION['userData'] = $request;
 		return $request;
 	}
 
@@ -45,7 +45,7 @@ class LoginModel extends Mysql {
 		$this->intListStatus = 3;
 		$this->intlistRolId = 0;
 		$this->strImg = "default.png";
-		
+
 	//consultar si existe
 		$sql = "SELECT * FROM table_user WHERE  user_email = '{$this->strTxtEmail}' or  user_ci = {$this->intIdentificacion}";
 		$request = $this->select_all($sql);
@@ -88,6 +88,21 @@ class LoginModel extends Mysql {
 		}
 		return $request;
 	}
+
+	//crear la relacion user y rol al crearlo y se ingresa en 0 para despues asignarle
+	public function setUserRol(int $intIdUser,int $intRol){
+		$this->intRol = $intRol;
+		$sql = "SELECT user_nick FROM table_user WHERE user_id = $intIdUser";
+		$resp = $this->select($sql);
+		if(!empty($resp)){
+			$insertRol = "INSERT INTO table_user_rol(user_nick,id_rol) VALUES(?,?)";
+			$arrDataRol = array($resp['user_nick'],$this->intRol);
+			$request = $this->insert($insertRol,$arrDataRol);
+		}else{
+			$request ="error";
+		}
+		return $request;
+	}
 	/**************
 	 * funcion para la bitacora
 	 */
@@ -99,7 +114,7 @@ class LoginModel extends Mysql {
 	// 	// $this->strHoraFin = $strHoraFin;
 	// 	$this->strTipo = $strTipo;
 	// 	$sql = "INSERT INTO table_bitacora (b_idUser, b_codigo,b_tipo) VALUES(?,?,?)";
-	// 	$arrData = array($this->intIdUser,$this->strCodigo,$this->strTipo); 
+	// 	$arrData = array($this->intIdUser,$this->strCodigo,$this->strTipo);
 	// 	$request = $this->insert($sql,$arrData);
 	// 	return $request;
 	// }

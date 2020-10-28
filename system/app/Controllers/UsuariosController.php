@@ -45,7 +45,6 @@ class Usuarios extends Controllers{
 					//al generar el pass se envia al modelo
 					$requestUser = $this->model->insertUser($intIdentificacion, $strTxtNombre, $strtxtApellidos, $intTxtTlf, $strTxtEmail,
 					$intListStatus, $intlistRolId, $strTxtPass);
-					
 				}else{
 					$option = 2;
 					$requestUser = $this->model->updateRolUser($idUser,$intIdentificacion,$strTxtEmail,$intlistRolId);
@@ -53,6 +52,8 @@ class Usuarios extends Controllers{
 				//evaluamos el request
 				if($requestUser > 0){
 					if($option == 1){
+						//relacionar un usuario con los roles al crearse nuevo rol es el asignado por el administrador
+						$sqlUserRol = $this->model->setUserRol($requestUser,$intlistRolId);
 						$arrResponse = array("status" => true, "msg" => "Se a creado el usuario");
 						//opcion para actualizar el nick al crearse el usuario
 						$userNIck = substr($strTxtNombre,0,1).substr($strtxtApellidos,0,1).'-0'.$requestUser;
@@ -145,7 +146,8 @@ class Usuarios extends Controllers{
 		}
 		die();
 	}
-	/************
+	/*******************************************************************************************************************
+	 * Nuevo modulo de perfil
 	 * para cargar los datos del usuario en el perfil
 	 */
 	public function perfil(){
@@ -182,7 +184,7 @@ class Usuarios extends Controllers{
 					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick ,$intOption,$filebase);
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
-						$arrResponse = array("status" => true, "msg" => "Datos actualizados correctamente"); 
+						$arrResponse = array("status" => true, "msg" => "Datos actualizados correctamente");
 						sessionUser($_SESSION['idUser']);
 					}else{
 						$arrResponse = array("status" => false, "msg" => "No es posible almacenar ls datos");
@@ -205,7 +207,7 @@ class Usuarios extends Controllers{
 					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick, $intOption,$filebase);
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
-						$arrResponse = array("status" => true, "msg" => "Cambio de usuario correcto"); 
+						$arrResponse = array("status" => true, "msg" => "Cambio de usuario correcto");
 						sessionUser($_SESSION['idUser']);
 					}else if($requestUser == "exist"){
 						$arrResponse = array("status" => false, "msg" => "Usuario seleccionado ya esta en uso");
@@ -230,7 +232,7 @@ class Usuarios extends Controllers{
 					$requestUser = $this->model->updatePerfil($idUser, $strTxtNombre, $strtxtApellidos, $intTxtTlf,$strTxCi,$strTxtEmail, $strTxtPass, $strTxtNick, $intOption,$fileBase);
 					//comprovamos la existencia del usuario si no se actualiza correctamente
 					if($requestUser > 0){
-						$arrResponse = array("status" => true, "msg" => "Cambio de password correctamente"); 
+						$arrResponse = array("status" => true, "msg" => "Cambio de password correctamente");
 					}else{
 						$arrResponse = array("status" => false, "msg" => "No es posible almacenar los datos");
 					}
@@ -245,8 +247,8 @@ class Usuarios extends Controllers{
 		die();
 	}
 
-		/************
-	 * para cargar los usuarios de alta
+		/*******************************************************************************************************************
+	 * Nuevo modulo para cargar los usuarios de alta
 	 */
 	public function alta(){
 		$data['page_title'] = "Dashboard - Usuarios de alta";
@@ -273,8 +275,8 @@ class Usuarios extends Controllers{
 		die();
 	}
 
-			/************
-	 * para cargar los usuarios de alta
+		/*******************************************************************************************************************
+	 * Nuevo modulo para cargar los usuarios de alta
 	 */
 	public function pendiente(){
 		$data['page_title'] = "Dashboard - Usuarios pendientes";
@@ -295,15 +297,14 @@ class Usuarios extends Controllers{
 				$htmlOptions .= '
 												<div class="col-lg-3 col-6">
 													<form id="formActivar">
-													<input type="hidden" name="idUser" value="'.$key['user_id'].'">
+														<input type="hidden" name="idUser" value="'.$key['user_id'].'">
 														<div class="small-box bg-info">
 															<div class="inner">
 																<h6>'.$key['user_nombres'].' <strong>'.$key['user_nick'].'</strong></h6>
 																<ul>
 																	<li>Estado <span class="badge badge-warning">Pendiente</span></li>
-																	<li>Cargo <span class="badge badge-danger">No posee</span></li>
+																	<li>Cargo <span class="badge badge-danger" style="cursor:pointer" onclick="cargarRol('.$key['user_id'].')">No posee</span></li>
 																</ul>
-																
 															</div>
 															<span class="ml-2" style="font-size: 10px">'.formatear_fecha($key['user_registro']).'</span>
 															<div class="icon">
@@ -311,25 +312,79 @@ class Usuarios extends Controllers{
 															</div>
 															<a href="#" class="small-box-footer" onclick="fntActivarUser('.$key['user_id'].')">Activar<i class="fas fa-arrow-circle-right ml-2"></i></a>
 														</div>
-	
 													</form>
-													
 												</div>';
 			}
 		}else{
 			$htmlOptions .='<div>no hay usuarios pendientes</div>';
-
 		}
 		echo $htmlOptions;
 		die();
 	}
+	public function getRoles(){
+		$arrData = $this->model->selectRoles();
+		$htmlOptions = "";
+		if(!empty($arrData)){
+			foreach ($arrData as $key) {
+				$htmlOptions .= '
+											<div class="custom-control custom-radio">
+												<input class="custom-control-input" type="radio" id="'.$key["rol_name"].'" name="radioRol" value="'.$key["rol_id"].'" >
+												<label for="'.$key["rol_name"].'" class="custom-control-label">'.$key["rol_name"].'</label>
+											</div>
+												';
+			}
+			$htmlOptions .= '<div class="form-group">
+													<button type="submit" class="btn btn-primary mt-2">Asignar</button>
+												</div>
+											</div>';
+		}else{
+			$htmlOptions .='<div>no hay usuarios pendientes</div>';
+		}
+		echo $htmlOptions;
+		die();
+	}
+/******
+ * funcion para asignar rol al usuario antes de activarlo
+ */
+	public function asignarRol(){
+		if($_POST){
+			$idUser = intval($_POST['txtIdUser']);
+			if(!isset($_POST['radioRol'])){
+				$arrResponse = array("status" => false, "msg" => "Debe seleccionar un rol");
+			}else{
+				$radioRol = intval($_POST['radioRol']);
+				if(!empty($idUser)){
+					$request = $this->model->asignarRol($idUser,$radioRol);
+					if($request){
+						$arrResponse = array("status" => true, "msg" => "Rol asignado");
+					}
+				}else{
+					$arrResponse = array("status" => false, "msg" => "A ocurrido un error");
+				}
+			}
+			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+		}
+		die();
+	}
+
 	public function activarUser(){
 		if($_POST){
 			$idUser = intval($_POST['idUser']);
 			if(!empty($idUser)){
-				$request = $this->model->statusUser($idUser,1);
-				if($request == 1){
-					$arrResponse = array("status" => true, "msg" => "Usuario activado");
+				$request = $this->model->activarUser($idUser);
+				if(!empty($request)){
+					if($request['id_rol'] == 0){
+						$arrResponse = array("status" => false, "msg" => "Debe asignarle un rol");
+					}else{
+						$status = $this->model->statusUser($idUser,1);
+						if($status == 1){
+							$arrResponse = array("status" => true, "msg" => "Usuario activado");
+						}else{
+							$arrResponse = array("status" => false, "msg" => "Hubo un error");
+						}
+					}
+				}else{
+					$arrResponse = array("status" => false, "msg" => "Debe seleccionar un rol");
 				}
 			}else{
 				$arrResponse = array("status" => false, "msg" => "A ocurrido un error");

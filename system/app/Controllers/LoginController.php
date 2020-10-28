@@ -79,7 +79,8 @@ class Login extends Controllers{
 					if (!file_exists($fileBase))
 					mkdir($fileBase, 0777, true);
 					$sqlUpdate = $this->model->updateNick($requestUser,$registerCi,$registerEmail,$userNIck,$fileBase);
-					$arrResponse = array("status" => true, "msg" => "Cuenta creada");	
+					$sqlUserRol = $this->model->setUserRol($requestUser,0);
+					$arrResponse = array("status" => true, "msg" => "Cuenta creada");
 				}else if($requestUser == "exist"){
 					$arrResponse = array("status" => false, "msg" => "Atencion! email o identificacion ya existe ingrese otro");
 				}else{
