@@ -296,7 +296,7 @@ class Usuarios extends Controllers{
 		if(!empty($arrData)){
 
 			foreach ($arrData as $key) {
-				$nick = "{$key['user_nick']}";
+				$nick = "'{$key['user_nick']}'";
 				$htmlOptions .= '
 												<div class="col-lg-3 col-6">
 													<form id="formActivar">
@@ -306,7 +306,7 @@ class Usuarios extends Controllers{
 																<h6>'.$key['user_nombres'].' <strong>'.$key['user_nick'].'</strong></h6>
 																<ul>
 																	<li>Estado <span class="badge badge-warning">Pendiente</span></li>
-																		<li>Cargo <span class="badge badge-danger" style="cursor:pointer" onclick="cargarRol('.$key['user_id'].',"'.$nick.'")">'.$key['rol_name'].'</span></li>
+																		<li>Cargo <span class="badge badge-danger" style="cursor:pointer" onclick="cargarRol('.$nick.','.$key['user_id'].')">'.$key['rol_name'].'</span></li>
 																</ul>
 															</div>
 															<span class="ml-2" style="font-size: 10px">'.formatear_fecha($key['user_registro']).'</span>
@@ -331,16 +331,19 @@ class Usuarios extends Controllers{
 		if(!empty($arrData)){
 			foreach ($arrData as $key) {
 				$htmlOptions .= '
-											<div class="custom-control custom-radio">
-												<input class="custom-control-input" type="radio" id="'.$key["rol_name"].'" name="radioRol" value="'.$key["rol_id"].'" >
-												<label for="'.$key["rol_name"].'" class="custom-control-label">'.$key["rol_name"].'</label>
-											</div>
+												<div class="custom-control custom-radio">
+													<input class="custom-control-input" type="radio" id="'.$key["rol_name"].'" name="radioRol" value="'.$key["rol_id"].'" >
+													<label for="'.$key["rol_name"].'" class="custom-control-label">'.$key["rol_name"].'</label>
+												</div>
 												';
 			}
-			// $htmlOptions .= '<div class="form-group">
-			// 										<button type="submit" class="btn btn-primary mt-2">Asignar</button>
-			// 									</div>
-			// 								</div>';
+			$htmlOptions .= '	</div>
+											</div>
+												<div class="card-footer bg-transparent border-success">
+													<button type="submit" class="btn btn-primary mt-2 btnAsignar">Asignar</button>
+												</div>
+											</form>
+										';
 		}else{
 			$htmlOptions .='<div class="alert alert-primary" role="alert">no hay usuarios pendientes</div>';
 		}
@@ -377,7 +380,7 @@ class Usuarios extends Controllers{
 			if(!empty($idUser)){
 				$request = $this->model->activarUser($idUser);
 				if(!empty($request)){
-					if($request['id_rol'] == 0){
+					if($request['id_rol'] == 2){
 						$arrResponse = array("status" => false, "msg" => "Debe asignarle un rol");
 					}else{
 						$status = $this->model->statusUser($idUser,1);
@@ -388,7 +391,7 @@ class Usuarios extends Controllers{
 						}
 					}
 				}else{
-					$arrResponse = array("status" => false, "msg" => "Debe seleccionar un rol");
+					$arrResponse = array("status" => false, "msg" => "Error con el servidor");
 				}
 			}else{
 				$arrResponse = array("status" => false, "msg" => "A ocurrido un error");

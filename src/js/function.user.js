@@ -668,11 +668,12 @@ function fntUserPend(){
 /****
  * cargar los roles y el nick del usuario para asociarlo
  */
-function cargarRol(idUser, nick) {
-	alert(nick);
+function cargarRol(nick, idUser) {
 	var colRol = document.querySelector(".colRol");
 	var getRoles = document.querySelector(".getRoles");
 	var txtIdUser = document.querySelector("#txtIdUser").value = idUser;
+	// var titleCard = document.querySelector("#titleCard").innerHTML = nick;
+	var cardText = document.querySelector("#cardText").innerHTML = "Seleccione un rol para "+ nick;
 	colRol.style.display = "block";
 	let request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 	let ajaxUrl = base_url + 'Usuarios/getRoles';
