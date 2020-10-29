@@ -294,58 +294,32 @@ class Usuarios extends Controllers{
 		$htmlOptions = "";
 		$cargo = "";
 		if(!empty($arrData)){
-			for ($i=0; $i < count($arrData); $i++) {
 
-
+			foreach ($arrData as $key) {
+				$nick = "{$key['user_nick']}";
 				$htmlOptions .= '
 												<div class="col-lg-3 col-6">
 													<form id="formActivar">
-														<input type="hidden" name="idUser" value="'.$arrData[$i]['user_id'].'">
+														<input type="hidden" name="idUser" value="'.$key['user_id'].'">
 														<div class="small-box bg-info">
 															<div class="inner">
-																<h6>'.$arrData[$i]['user_nombres'].' <strong>'.$arrData[$i]['user_nick'].'</strong></h6>
+																<h6>'.$key['user_nombres'].' <strong>'.$key['user_nick'].'</strong></h6>
 																<ul>
 																	<li>Estado <span class="badge badge-warning">Pendiente</span></li>
-																	<li>Cargo <span class="badge badge-danger" style="cursor:pointer" onclick="cargarRol('.$arrData[$i]['user_id'].')">'.$arrData[$i]['rol_name'].'</span></li>
+																		<li>Cargo <span class="badge badge-danger" style="cursor:pointer" onclick="cargarRol('.$key['user_id'].',"'.$nick.'")">'.$key['rol_name'].'</span></li>
 																</ul>
 															</div>
-															<span class="ml-2" style="font-size: 10px">'.formatear_fecha($arrData[$i]['user_registro']).'</span>
+															<span class="ml-2" style="font-size: 10px">'.formatear_fecha($key['user_registro']).'</span>
 															<div class="icon">
 																<i class="ion ion-bag"></i>
 															</div>
-															<a href="#" class="small-box-footer" onclick="fntActivarUser('.$arrData[$i]['user_id'].')">Activar<i class="fas fa-arrow-circle-right ml-2"></i></a>
+															<a href="#" class="small-box-footer" onclick="fntActivarUser('.$key['user_id'].')">Activar<i class="fas fa-arrow-circle-right ml-2"></i></a>
 														</div>
 													</form>
 												</div>';
 			}
-			// foreach ($arrData as $key) {
-			// 	$htmlOptions .= '
-			// 									<div class="col-lg-3 col-6">
-			// 										<form id="formActivar">
-			// 											<input type="hidden" name="idUser" value="'.$key['user_id'].'">
-			// 											<div class="small-box bg-info">
-			// 												<div class="inner">
-			// 													<h6>'.$key['user_nombres'].' <strong>'.$key['user_nick'].'</strong></h6>
-			// 													<ul>
-			// 														<li>Estado <span class="badge badge-warning">Pendiente</span></li>';
-			// 														if($key['id_rol'] == 2):
-			// 															'<li>Cargo <span class="badge badge-danger" style="cursor:pointer" onclick="cargarRol('.$key['user_id'].')">'.$key['rol_name'].'</span></li>';
-			// 														else:
-			// 															'<li>Cargo <span class="badge badge-danger" style="cursor:pointer" >'.$key[''].'</span></li>';
-			// 														endif;
-			// 													'	</ul>
-			// 												</div>
-			// 												<span class="ml-2" style="font-size: 10px">'.formatear_fecha($key['user_registro']).'</span>
-			// 												<div class="icon">
-			// 													<i class="ion ion-bag"></i>
-			// 												</div>
-			// 												<a href="#" class="small-box-footer" onclick="fntActivarUser('.$key['user_id'].')">Activar<i class="fas fa-arrow-circle-right ml-2"></i></a>
-			// 											</div>
-			// 										</form>
-			// 									</div>';
-			// }
 		}else{
-			$htmlOptions .='<div class="alert">no hay usuarios pendientes</div>';
+			$htmlOptions .='<div class="alert">No hay usuarios pendientes</div>';
 		}
 		echo $htmlOptions;
 		die();
@@ -363,10 +337,10 @@ class Usuarios extends Controllers{
 											</div>
 												';
 			}
-			$htmlOptions .= '<div class="form-group">
-													<button type="submit" class="btn btn-primary mt-2">Asignar</button>
-												</div>
-											</div>';
+			// $htmlOptions .= '<div class="form-group">
+			// 										<button type="submit" class="btn btn-primary mt-2">Asignar</button>
+			// 									</div>
+			// 								</div>';
 		}else{
 			$htmlOptions .='<div class="alert alert-primary" role="alert">no hay usuarios pendientes</div>';
 		}

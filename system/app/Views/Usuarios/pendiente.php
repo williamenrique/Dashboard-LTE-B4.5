@@ -31,18 +31,52 @@ getModal('modalUsuario',$data);
 					<div class="card">
 						<div class="card-header">
 							<h5 class="text-muted">Lista de usuarios de alta en el sistema</h5>
-							<div class="row">
-								<div class="col-sm-6 colRol">
-									<form id="formRolAsignar">
-										<input type="text" name="txtIdUser" id="txtIdUser" value="">
-										<div class="form-group getRoles">
-
-									</form>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
+
+				<div class="card border-success mb-3 colRol getRoles" style="max-width: 18rem;">
+					<div class="card-header bg-transparent border-success" id="title-card">
+						<h6 class="card-text text-success">Seleccione un rol para <span id="title-card">we21</span></h6>
+					</div>
+					<div class="card-body text-success">
+						<form id="formRolAsignar">
+							<input type="hidden" name="txtIdUser" id="txtIdUser" value="">
+							<div class="form-group">
+							</div>
+						</form>
+					</div>
+					<div class="card-footer bg-transparent border-success">
+						<button type="submit" class="btn btn-primary mt-2">Asignar</button>
+					</div>
+				</div>
+
+				<!-- <div class="row">
+					<div class="col-sm-4 colRol">
+						<form id="formRolAsignar">
+							<input type="hidden" name="txtIdUser" id="txtIdUser" value="">
+							<div class="form-group getRoles">
+								<div class="card bg-success">
+									<div class="card-header"> Usuario : we21</div>
+									<div class="card-body">
+										<div class="custom-control custom-radio">
+											<input class="custom-control-input" type="radio" id="" name="radioRol" value="">
+											<label for="" class="custom-control-label">radio 1</label>
+										</div>
+										<div class="custom-control custom-radio">
+											<input class="custom-control-input" type="radio" id="" name="radioRol" value="">
+											<label for="" class="custom-control-label">radio 1</label>
+										</div>
+										<div class="custom-control custom-radio">
+											<input class="custom-control-input" type="radio" id="" name="radioRol" value="">
+											<label for="" class="custom-control-label">radio 1</label>
+										</div>
+									</div>
+								</div>
+						</form>
+					</div>
+				</div> -->
+
 			</div>
 
 			<div class=" row box_user_pend">

@@ -227,7 +227,7 @@ class UsuariosModel extends Mysql {
 	}
 
 	public function selectRoles(){
-		$sql = "SELECT * FROM table_roles WHERE rol_status = 1";
+		$sql = "SELECT * FROM table_roles WHERE rol_status = 1 AND rol_id != 2";
 		$request = $this->select_all($sql);
 		return $request;
 	}

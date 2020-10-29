@@ -668,7 +668,8 @@ function fntUserPend(){
 /****
  * cargar los roles y el nick del usuario para asociarlo
  */
-function cargarRol(idUser) {
+function cargarRol(idUser, nick) {
+	alert(nick);
 	var colRol = document.querySelector(".colRol");
 	var getRoles = document.querySelector(".getRoles");
 	var txtIdUser = document.querySelector("#txtIdUser").value = idUser;

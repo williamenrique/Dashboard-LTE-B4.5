@@ -49,6 +49,6 @@ body {
 
 .colRol{
 	transition: .3 ease;
-	display: none;
+	display: block;
 
 }
