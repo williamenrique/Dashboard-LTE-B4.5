@@ -11,7 +11,7 @@ class Home extends Controllers{
 	public function home(){
 		//invocar la vista con views y usamos getView y pasamos parametros esta clase y la vista
 		//incluimos un arreglo que contendra toda la informacion que se enviara al home
-		$data['page_tag'] = "Dashboard - Tienda Virtual";
+		$data['page_tag'] = "Home - Tienda Virtual";
 		$data['page_title'] = "Pagina Principal";
 		$data['page_name'] = "home";
 		$this->views->getViews($this, "home", $data);
