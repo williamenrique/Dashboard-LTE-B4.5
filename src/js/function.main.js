@@ -70,3 +70,7 @@ function notifi(data, icon) {
 	}, false);
 })();
 
+window.onunload = unloadPage;
+function unloadPage(){
+ alert("unload event detected!");
+}

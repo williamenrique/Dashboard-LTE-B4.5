@@ -5,6 +5,8 @@ class Login extends Controllers{
 		session_start();
 		if (isset($_SESSION['login'])) {
 			header("Location:".base_url().'dashboard');
+		}else{
+			$sql = "SELECT * FROM db_dashboard.table_timeline WHERE  time_fin is null   ORDER BY time_idUser = 1 DESC LIMIT 1";
 		}
 		//invocar para que se ejecute el metodo de la herencia
 		parent::__construct();
