@@ -69,7 +69,7 @@ function notifi(data, icon) {
 		});
 	}, false);
 })();
-
+//TODO: ubicar una funcion para cerrar sesion al cerrarse el navegador
 window.onunload = unloadPage;
 function unloadPage(){
  alert("unload event detected!");
