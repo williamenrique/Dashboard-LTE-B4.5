@@ -3,9 +3,8 @@
 class Home extends Controllers{
 	public function __construct(){
 		session_start();
-		if (empty($_SESSION['login'])) {
-			header("Location:".base_url().'dashboard');
-		}
+		session_unset();
+		session_destroy();
 		//invocar para que se ejecute el metodo de la herencia
 		parent::__construct();
 	}
@@ -29,7 +28,7 @@ class Home extends Controllers{
 		$data = $this->model->getUser($id);
 		print_r($data);
 	}
-	
+
 	//metodo actualizar usuario
 	public function actualizar(){
 		$data = $this->model->updateUser(1,"Enrique",38);
