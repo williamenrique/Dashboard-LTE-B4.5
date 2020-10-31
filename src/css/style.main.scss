@@ -1,0 +1,14 @@
+.navbar{
+	background: #FFF159;
+	form{
+		input[type=search]{
+			position: relative;
+		}
+		.search{
+			position: absolute;
+			top: 20px;
+			right: 30px;
+			background-color: #ccc;
+		}
+	}
+}

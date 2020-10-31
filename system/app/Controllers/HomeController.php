@@ -17,31 +17,6 @@ class Home extends Controllers{
 		$this->views->getViews($this, "home", $data);
 	}
 
-	//prueba de insertar
-	public function insertar(){
-		$data = $this->model->setUser('Juan',25);
-		print_r($data);
-	}
 
-	//metodo ver usuario
-	public function verUsuario($id){
-		$data = $this->model->getUser($id);
-		print_r($data);
-	}
-
-	//metodo actualizar usuario
-	public function actualizar(){
-		$data = $this->model->updateUser(1,"Enrique",38);
-		print_r($data);
-	}
-	//metodo ver usuarios
-	public function verUser(){
-		$data = $this->model->getUsers();
-		print_r($data);
-	}
-		public function deleteUser($id){
-		$data = $this->model->delUser($id);
-		print_r($data);
-	}
 
 }

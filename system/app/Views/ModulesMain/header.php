@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="<?= PLUGINS?>fontawesome-free/css/all.min.css">
 	<!-- sweetalert -->
 	<link rel="stylesheet" href="<?= PLUGINS?>sweetalert/sweetalert2.css">
-	<link rel="stylesheet" href="<?= CSS_VENDORS?>mdb.min.css">
-	<link rel="stylesheet" href="<?= CSS?>style.admin.css">
+	<link rel="stylesheet" href="<?= CSS_VENDORS?>demobar.css">
+	<link rel="stylesheet" href="<?= CSS_VENDORS?>style-freedom.css">
 	<title><?= $data['page_tag'] ?>
 	</title>
 </head>
 
-<body>
+<body class="no-scroll" style="">
